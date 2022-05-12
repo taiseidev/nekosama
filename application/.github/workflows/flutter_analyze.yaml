@@ -1,0 +1,54 @@
+# Define the workflow to be executed
+name: flutter analyze
+
+# Define triggers
+on:
+  # Triggers the creation of a pull request.
+  pull_request:
+    # When a pull request is created and when the created pull request is committed
+    types: [opened, synchronize]
+    # Targeting Develop Branches
+    branches:
+      - develop
+
+  # Run manually from Github
+  workflow_dispatch:
+
+# Define jobs to be executed
+jobs:
+  # Set job name
+  flutter_analyze:
+
+    # Virtual host machine on which to run the job
+    runs-on: ubuntu-latest
+
+    # Set timeout time
+    timeout-minutes: 5
+
+    # Define actions to be executed under steps.
+    # uses ・・・ Description when using actions provided by GitHub or third parties.
+    # run ・・・ Execution command
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: flutter cache
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.0.0"
+          channel: "stable"
+          cache: true
+          cache-key: flutter
+          cache-path: ${{ runner.tool_cache }}/flutter
+      - name: install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.0.0"
+          channel: "stable"
+      - name: flutter version
+        run: flutter --version
+      - name: flutter pub get
+        run: flutter pub get
+
+        # Perform static analysis
+      - name: flutter analyze
+        run: flutter analyze
