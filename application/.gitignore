@@ -153,5 +153,5 @@ firebase_options.dart
 
 # google-services.json
 **/android/app/google-services.json
-
+**/ios/GoogleService-Info.plist
 **/ios/Flutter/DartDefines.xcconfig
