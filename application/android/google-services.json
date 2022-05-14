@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "23902856849",
+    "project_id": "nekosama-app",
+    "storage_bucket": "nekosama-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:23902856849:android:1f2825dcebf9f4d9618130",
+        "android_client_info": {
+          "package_name": "com.jp.nekosama.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "23902856849-tholc5ks3cirg9kv4s1f6c933e10djac.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdgtSNWwmCLtYcwj6tGl5LTkRQdyz3o9Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "23902856849-tholc5ks3cirg9kv4s1f6c933e10djac.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

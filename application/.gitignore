@@ -150,3 +150,8 @@ app.*.map.json
 /android/app/release
 
 firebase_options.dart
+
+# google-services.json
+**/android/app/google-services.json
+
+**/ios/Flutter/DartDefines.xcconfig
