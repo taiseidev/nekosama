@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>431586259802-8eq4qknnf13kakjok4lr1rgdpr5rr87f.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.431586259802-8eq4qknnf13kakjok4lr1rgdpr5rr87f</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCUhCHdhB5tEEv_6uFaR7y-1Kcv0bbJvt0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>431586259802</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.jp.nekosama.dev</string>
+	<key>PROJECT_ID</key>
+	<string>nekosama-app-dev</string>
+	<key>STORAGE_BUCKET</key>
+	<string>nekosama-app-dev.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:431586259802:ios:b6507ac55f21dddb36f963</string>
+</dict>
+</plist>
