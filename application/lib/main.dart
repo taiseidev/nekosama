@@ -1,6 +1,7 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:nekosama/router/router.dart';
 import 'package:nekosama/utils/logger_util.dart';
 import 'firebase_options.dart';
 
@@ -10,8 +11,6 @@ void main() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-  } else {
-    await Firebase.initializeApp();
   }
   runApp(
     DevicePreview(
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
@@ -32,7 +31,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      routeInformationParser: Routers.router.routeInformationParser,
+      routerDelegate: Routers.router.routerDelegate,
     );
   }
 }
@@ -43,6 +43,10 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LoggerUtil.logger.i('message');
-    return const Scaffold();
+    return const Scaffold(
+      body: Center(
+        child: Text(''),
+      ),
+    );
   }
 }
