@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nekosama/app.dart';
 import 'package:nekosama/firebase_options_dev.dart' as dev;
 
@@ -20,6 +21,8 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(
-    const App(),
+    const ProviderScope(
+      child: App(),
+    ),
   );
 }
