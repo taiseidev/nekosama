@@ -18,6 +18,8 @@ dependencies:
   flutter_hooks: ^0.18.5+1
   lottie: ^2.1.0
   roggle: ^0.3.0
+  flutter_gen_runner: ^5.1.0+1
+  build_runner:
 
 dev_dependencies:
   flutter_test:

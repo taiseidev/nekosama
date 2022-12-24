@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nekosama/app.dart';
 import 'package:nekosama/firebase_options_dev.dart' as dev;
+import 'package:nekosama/utils/provider_logger.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,8 +22,10 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(
-    const ProviderScope(
-      child: App(),
+    ProviderScope(
+      // Providerのライフサイクルを監視
+      observers: [ProviderLogger()],
+      child: const App(),
     ),
   );
 }

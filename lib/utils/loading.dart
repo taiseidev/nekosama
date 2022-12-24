@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
+import 'package:nekosama/gen/assets.gen.dart';
 
 /// ローディングの表示を管理
 final loadingProvider =
@@ -24,7 +25,7 @@ class PrimaryLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Lottie.asset('assets/loading/loading.json'),
+      child: Lottie.asset(Assets.loading.primaryLoading),
     );
   }
 }
