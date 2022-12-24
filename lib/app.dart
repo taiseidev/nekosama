@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nekosama/gen/fonts.gen.dart';
 import 'package:nekosama/utils/extensions/async_value.dart';
@@ -16,31 +17,36 @@ class App extends ConsumerWidget {
       loginStateProvider,
       completeMessage: 'スナックバーを共通化しました！',
     );
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: FontFamily.trainOne,
-      ),
-      navigatorKey: ref.watch(navigatorKeyProvider),
-      scaffoldMessengerKey: ref.watch(scaffoldMessengerKeyProvider),
-      builder: (context, child) {
-        return Stack(
-          children: [
-            MediaQuery(
-              // 端末依存のフォントを1に固定
-              data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
-              child: child!,
-            ),
-            // ローディングを表示
-            if (isLoading)
-              const ColoredBox(
-                color: Colors.black26,
-                child: PrimaryLoading(),
-              )
-          ],
+    return ScreenUtilInit(
+      builder: (BuildContext context, Widget? child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          navigatorKey: ref.watch(navigatorKeyProvider),
+          scaffoldMessengerKey: ref.watch(scaffoldMessengerKeyProvider),
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            fontFamily: FontFamily.trainOne,
+          ),
+          builder: (context, child) {
+            return Stack(
+              children: [
+                MediaQuery(
+                  // 端末依存のフォントを1に固定
+                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+                  child: child!,
+                ),
+                // ローディングを表示
+                if (isLoading)
+                  const ColoredBox(
+                    color: Colors.black26,
+                    child: PrimaryLoading(),
+                  )
+              ],
+            );
+          },
+          home: const HomePage(),
         );
       },
-      home: const HomePage(),
     );
   }
 }

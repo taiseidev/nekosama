@@ -29,6 +29,7 @@ class ScaffoldMessengerService {
       scaffoldMessengerState.removeCurrentSnackBar();
     }
 
+    // スナックバーを表示
     return scaffoldMessengerState
         .showSnackBar(primarySnackBar(message: message));
   }
