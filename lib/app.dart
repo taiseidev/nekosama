@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nekosama/gen/fonts.gen.dart';
 import 'package:nekosama/utils/extensions/async_value.dart';
 import 'package:nekosama/utils/global_key.dart';
 import 'package:nekosama/utils/loading.dart';
@@ -15,6 +16,10 @@ class App extends ConsumerWidget {
       completeMessage: '完了しました',
     );
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        fontFamily: FontFamily.trainOne,
+      ),
       navigatorKey: ref.watch(navigatorKeyProvider),
       scaffoldMessengerKey: ref.watch(scaffoldMessengerKeyProvider),
       builder: (context, child) {
@@ -46,11 +51,20 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            ref.read(userServiceProvider).login();
-          },
-          child: const Text('fdf'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'nekosama',
+              style: TextStyle(fontSize: 30),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                await ref.read(userServiceProvider).login();
+              },
+              child: const Text('fdf'),
+            ),
+          ],
         ),
       ),
     );
