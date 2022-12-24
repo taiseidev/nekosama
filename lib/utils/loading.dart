@@ -24,8 +24,7 @@ class PrimaryLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Lottie.network(
-      'https://assets10.lottiefiles.com/packages/lf20_0FQ4S0.json',
-    ));
+      child: Lottie.asset('assets/loading/loading.json'),
+    );
   }
 }

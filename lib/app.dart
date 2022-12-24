@@ -81,7 +81,7 @@ class UserService {
     // ログイン処理を実行する
     notifier.state = await AsyncValue.guard(() async {
       // ここで実際にログイン処理を非同期で行う
-      await Future.delayed(const Duration(seconds: 10));
+      await Future.delayed(const Duration(seconds: 3));
     });
   }
 }
