@@ -1,5 +1,8 @@
 # nekosama
 
+# Riverpod
+Providerを作成する際にnameプロパティに作成したProviderを識別できる名前を指定する。
+
 # テスト
 
 <br>

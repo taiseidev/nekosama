@@ -4,6 +4,7 @@ import 'package:nekosama/gen/fonts.gen.dart';
 import 'package:nekosama/utils/extensions/async_value.dart';
 import 'package:nekosama/utils/global_key.dart';
 import 'package:nekosama/utils/loading.dart';
+import 'package:nekosama/utils/scaffold_messenger_service.dart';
 
 class App extends ConsumerWidget {
   const App({super.key});
@@ -13,7 +14,7 @@ class App extends ConsumerWidget {
     final isLoading = ref.watch(loadingProvider);
     ref.handleAsyncValue<void>(
       loginStateProvider,
-      completeMessage: '完了しました',
+      completeMessage: 'スナックバーを共通化しました！',
     );
     return MaterialApp(
       theme: ThemeData(

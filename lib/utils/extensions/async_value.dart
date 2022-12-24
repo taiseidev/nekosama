@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nekosama/utils/global_key.dart';
 import 'package:nekosama/utils/loading.dart';
+import 'package:nekosama/utils/scaffold_messenger_service.dart';
 
 extension WidgetRefEx on WidgetRef {
   void handleAsyncValue<T>(
@@ -24,13 +25,8 @@ extension WidgetRefEx on WidgetRef {
 
               // 完了メッセージがあればスナックバーを表示する
               if (completeMessage != null) {
-                final messengerState =
-                    read(scaffoldMessengerKeyProvider).currentState;
-                messengerState?.showSnackBar(
-                  SnackBar(
-                    content: Text(completeMessage),
-                  ),
-                );
+                read(scaffoldMessengerServiceProvider)
+                    .showSnackBar(completeMessage);
               }
               complete?.call(read(navigatorKeyProvider).currentContext!, data);
             },
