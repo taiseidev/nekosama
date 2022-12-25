@@ -10,6 +10,9 @@
 class FontFamily {
   FontFamily._();
 
+  /// Font family: NotoSansJP
+  static const String notoSansJP = 'NotoSansJP';
+
   /// Font family: Train One
   static const String trainOne = 'Train One';
 }

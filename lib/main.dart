@@ -24,6 +24,7 @@ Future<void> main() async {
 
   runApp(
     DevicePreview(
+      isToolbarVisible: false,
       builder: (BuildContext context) => ProviderScope(
         // Providerのライフサイクルを監視
         observers: [ProviderLogger()],

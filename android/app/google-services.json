@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "823669702357",
+    "project_id": "nekosama-pj-dev",
+    "storage_bucket": "nekosama-pj-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823669702357:android:76af56b436269f4c40ec5c",
+        "android_client_info": {
+          "package_name": "co.jp.nekosama.project.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "823669702357-m2oqrukfqh15gaf3b2qlt729vm3lojgf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDd-9G_NikQKtXIH5GiTM_p072Nk--1P_w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "823669702357-m2oqrukfqh15gaf3b2qlt729vm3lojgf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "823669702357-9sghilkjs3dm17sd4lalop96j54aeirq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "co.jp.nekosama.project.dev"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
