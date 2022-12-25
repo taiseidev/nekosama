@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nekosama/gen/fonts.gen.dart';
-import 'package:nekosama/ui/pages/auth/login/login_page.dart';
+import 'package:nekosama/ui/router/router.dart';
 import 'package:nekosama/ui/widgets/loading.dart';
-import 'package:nekosama/utils/global_key.dart';
 import 'package:nekosama/utils/loading.dart';
 import 'package:nekosama/utils/scaffold_messenger_service.dart';
 
@@ -17,9 +16,13 @@ class App extends ConsumerWidget {
 
     return ScreenUtilInit(
       builder: (BuildContext context, Widget? child) {
-        return MaterialApp(
+        final router = ref.watch(routerProvider);
+        return MaterialApp.router(
+          routerDelegate: router.routerDelegate,
+          routeInformationParser: router.routeInformationParser,
+          routeInformationProvider: router.routeInformationProvider,
           debugShowCheckedModeBanner: false,
-          navigatorKey: ref.watch(navigatorKeyProvider),
+          // navigatorKey: ref.watch(navigatorKeyProvider),
           scaffoldMessengerKey: ref.watch(scaffoldMessengerKeyProvider),
           theme: ThemeData(
             primarySwatch: Colors.blue,
@@ -42,7 +45,6 @@ class App extends ConsumerWidget {
               ],
             );
           },
-          home: const LoginPage(),
         );
       },
     );

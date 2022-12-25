@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nekosama/ui/pages/auth/login/components/login_page_body.dart';
+import 'package:nekosama/ui/pages/top/components/top_page_body.dart';
 import 'package:nekosama/utils/constants/colors.dart';
 
-class LoginPage extends ConsumerWidget {
-  const LoginPage({super.key});
+class TopPage extends ConsumerWidget {
+  const TopPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -14,7 +14,8 @@ class LoginPage extends ConsumerWidget {
     // );
     return const Scaffold(
       backgroundColor: scaffoldBackgroundColor,
-      body: LoginPageBody(),
+      resizeToAvoidBottomInset: false,
+      body: TopPageBody(),
     );
   }
 }
