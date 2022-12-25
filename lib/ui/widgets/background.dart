@@ -43,13 +43,11 @@ class PrimaryBackground extends StatelessWidget {
         ),
         Positioned(
           top: 550,
-          child: Container(
-            child: Blob.fromID(
-              id: const ['6-2-69413'],
-              size: 600,
-              styles: BlobStyles(
-                color: const Color(0xff22345f),
-              ),
+          child: Blob.fromID(
+            id: const ['6-2-69413'],
+            size: 600,
+            styles: BlobStyles(
+              color: const Color(0xff22345f),
             ),
           ),
         ),

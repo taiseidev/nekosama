@@ -8,14 +8,14 @@ environment:
   sdk: '>=2.17.5 <3.0.0'
 
 dependencies:
+  cloud_firestore:
+  cupertino_icons:
+  firebase_auth:
+  firebase_core:
+  flutter_hooks:
   flutter:
     sdk: flutter
-  cupertino_icons:
-  firebase_core:
-  firebase_auth:
-  cloud_firestore:
   hooks_riverpod:
-  flutter_hooks:
   lottie:
   roggle:
   flutter_gen_runner:

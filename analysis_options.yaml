@@ -1,2 +1,13 @@
 # https://pub.dev/packages/pedantic_mono
 include: package:pedantic_mono/analysis_options.yaml
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - lib/firebase_options_dev.dart
+    - lib/firebase_options_prod.dart
+
+linter:
+  rules:
+    sort_pub_dependencies: false
