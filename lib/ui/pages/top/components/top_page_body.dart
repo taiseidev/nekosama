@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nekosama/gen/fonts.gen.dart';
 import 'package:nekosama/ui/widgets/buttons/cat_button.dart';
 import 'package:nekosama/ui/widgets/stack_with_background.dart';
+import 'package:nekosama/utils/constants/string.dart';
 
 class TopPageBody extends ConsumerWidget {
   const TopPageBody({super.key});
@@ -16,20 +17,20 @@ class TopPageBody extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Text(
-              'nekosama',
+              appName,
               style: TextStyle(
                 fontSize: 50,
                 fontFamily: FontFamily.trainOne,
               ),
             ),
-            Gap(40),
+            Gap(20),
             Text(
-              '~ ねこちゃんで溢れたSNS ~',
+              subTitle,
               style: TextStyle(
                 fontSize: 20,
               ),
             ),
-            Gap(100),
+            Gap(60),
             CatButton(),
           ],
         ),
@@ -37,6 +38,3 @@ class TopPageBody extends ConsumerWidget {
     );
   }
 }
-
-// ボタンのpositionを管理するProvider
-final boolProvider = StateProvider<bool>((_) => false);

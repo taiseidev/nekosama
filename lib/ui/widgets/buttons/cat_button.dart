@@ -1,83 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nekosama/ui/pages/top/components/top_page_body.dart';
+import 'package:nekosama/utils/constants/string.dart';
 
-class CatButton extends ConsumerWidget {
+// トップ画面のボタン
+class CatButton extends HookWidget {
   const CatButton({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    void onTapDown(TapDownDetails detail) {
-      ref.watch(boolProvider.notifier).update((state) => state = true);
-    }
-
-    void onTapUp(TapDownDetails detail) {
-      ref.watch(boolProvider.notifier).update((state) => state = false);
-      context.push('/signIn');
-    }
-
-    void onTapCancel() {
-      ref.watch(boolProvider.notifier).update((state) => state = false);
-    }
-
+  Widget build(BuildContext context) {
+    final isPressed = useState(false);
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(
-                top: ref.watch(boolProvider) ? 8.0 : 0.0,
-              ),
-              child: GestureDetector(
-                onTapDown: onTapDown,
+        Gap(isPressed.value ? 8.0 : 0.0),
+        Padding(
+          padding: EdgeInsets.only(bottom: isPressed.value ? 0.0 : 8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTapDown: (value) {
+                  isPressed.value = true;
+                },
                 onTapUp: (value) {
-                  ref
-                      .watch(boolProvider.notifier)
-                      .update((state) => state = false);
+                  isPressed.value = false;
                   context.push('/signIn');
                 },
-                onTapCancel: onTapCancel,
-                child: Center(
-                  child: CustomPaint(
-                    size: const Size(300, 100),
-                    painter: CirclePainter(),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: ref.watch(boolProvider) ? 32.0 : 24.0,
-              ),
-              child: GestureDetector(
-                onTapDown: onTapDown,
-                onTapUp: (value) {
-                  ref
-                      .watch(boolProvider.notifier)
-                      .update((state) => state = false);
-                  context.push('/signIn');
+                onTapCancel: () {
+                  isPressed.value = false;
                 },
-                onTapCancel: onTapCancel,
-                child: const Text(
-                  '登録する？',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: CustomPaint(
+                  size: const Size(300, 100),
+                  painter: CatButtonPainter(),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
   }
 }
 
-class CirclePainter extends CustomPainter {
+class CatButtonPainter extends CustomPainter {
   static const buttonColor = Color(0xff434243);
   static const height = 0.3;
   static const leftWidth = 0.35;
@@ -87,6 +53,7 @@ class CirclePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()..color = buttonColor;
 
+    // 土台
     final rect = RRect.fromLTRBR(
       size.width * 0.2,
       size.height * height,
@@ -116,6 +83,25 @@ class CirclePainter extends CustomPainter {
       ..close();
 
     canvas.drawPath(pathRight, paint);
+
+// テキスト描画用のペインター
+    TextPainter(
+      text: const TextSpan(
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.w800,
+        ),
+        children: <TextSpan>[
+          TextSpan(text: catButtonText),
+        ],
+      ),
+      textDirection: TextDirection.ltr,
+    )
+      ..layout(
+        maxWidth: size.width,
+      )
+      ..paint(canvas, Offset(size.width / 3, size.height / 2));
   }
 
   @override

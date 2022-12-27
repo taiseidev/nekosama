@@ -7,7 +7,7 @@ class SignInPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: scaffoldBackgroundColor,
       body: SignInPageBody(),

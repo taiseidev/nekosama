@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:nekosama/ui/pages/top/components/top_page_body.dart';
+import 'package:nekosama/ui/pages/auth/components/auth_code_input_page_body.dart';
 import 'package:nekosama/utils/constants/colors.dart';
 
-class TopPage extends StatelessWidget {
-  const TopPage({super.key});
+class AuthCodeInputPage extends StatelessWidget {
+  const AuthCodeInputPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       backgroundColor: scaffoldBackgroundColor,
-      // キーボードがWidgetを押し上げないようにする
       resizeToAvoidBottomInset: false,
-      body: TopPageBody(),
+      body: AuthCodeInputPageBody(),
     );
   }
 }
