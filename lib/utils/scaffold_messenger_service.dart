@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nekosama/ui/widgets/snackBar.dart';
+import 'package:nekosama/ui/widgets/snack_bar.dart';
 
 final scaffoldMessengerKeyProvider = Provider(
   (_) => GlobalKey<ScaffoldMessengerState>(),
