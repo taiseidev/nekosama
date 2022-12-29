@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nekosama/src/common_widgets/buttons/primary_back_button.dart';
 import 'package:nekosama/src/common_widgets/buttons/primary_button.dart';
+import 'package:nekosama/src/common_widgets/process_timeline.dart';
 import 'package:nekosama/src/common_widgets/stack_with_background.dart';
 import 'package:nekosama/src/common_widgets/text_form/auth_text_form.dart';
 import 'package:nekosama/src/features/authentication/presentation/sign_in/auth_controller.dart';
@@ -34,6 +35,8 @@ class PhoneNumberInputPage extends HookConsumerWidget {
     final formKey = GlobalKey<FormState>();
 
     final focusNode = FocusNode();
+
+    const processIndex = 0;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: scaffoldBackgroundColor,
@@ -41,7 +44,8 @@ class PhoneNumberInputPage extends HookConsumerWidget {
         child: Column(
           children: [
             const PrimaryBackButton(),
-            const Gap(50),
+            const ProcessTimeline(activeIndex: 0),
+            const Gap(30),
             const Text(
               inputPhoneNumber,
               style: TextStyle(
@@ -50,20 +54,22 @@ class PhoneNumberInputPage extends HookConsumerWidget {
               ),
             ),
             const Gap(80),
-            AuthTextForm(
-              title: '電話番号',
-              formKey: formKey,
-              controller: controller,
-              validator: (value) {
-                if (!phoneValidator.validate(value)) {
-                  return phoneValidator.getErrorMessage();
-                }
-                return null;
-              },
-              type: FormType.phone,
-              maxLength: 11,
-              hintText: 'ハイフンなしで入力',
-              focusNode: focusNode,
+            Form(
+              key: formKey,
+              child: AuthTextForm(
+                title: '電話番号',
+                controller: controller,
+                focusNode: focusNode,
+                validator: (value) {
+                  if (!phoneValidator.validate(value)) {
+                    return phoneValidator.getErrorMessage();
+                  }
+                  return null;
+                },
+                type: FormType.phone,
+                maxLength: 11,
+                hintText: 'ハイフンなしで入力',
+              ),
             ),
             const Gap(40),
             PrimaryButton(

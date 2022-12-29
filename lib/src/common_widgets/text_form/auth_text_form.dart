@@ -12,7 +12,6 @@ class AuthTextForm extends StatelessWidget {
     required this.title,
     required this.hintText,
     required this.maxLength,
-    required this.formKey,
     required this.focusNode,
     required this.controller,
     required this.type,
@@ -22,7 +21,7 @@ class AuthTextForm extends StatelessWidget {
   final String title;
   final String hintText;
   final int maxLength;
-  final Key formKey;
+
   final FocusNode focusNode;
   final TextEditingController controller;
   final FormType type;
@@ -36,39 +35,35 @@ class AuthTextForm extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title),
-          Form(
-            key: formKey,
-            child: TextFormField(
-              focusNode: focusNode,
-              controller: controller,
-              // 画面遷移時に自動でフォーカス
-              autofocus: true,
-              inputFormatters: [
-                // 入力されるTextを数字に限定
-                if (type == FormType.phone)
-                  FilteringTextInputFormatter.digitsOnly
-              ],
-              // キーボードを数字のみに設定
-              keyboardType: type == FormType.phone
-                  ? TextInputType.number
-                  : TextInputType.none,
-              // バリデーション
-              validator: validator,
-              // 文字数を11文字に限定
-              maxLength: maxLength,
-              decoration: InputDecoration(
-                hintText: hintText,
-                enabledBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 2,
-                    color: Colors.grey,
-                  ),
+          TextFormField(
+            focusNode: focusNode,
+            controller: controller,
+            // 画面遷移時に自動でフォーカス
+            autofocus: true,
+            inputFormatters: [
+              // 入力されるTextを数字に限定
+              if (type == FormType.phone) FilteringTextInputFormatter.digitsOnly
+            ],
+            // キーボードを数字のみに設定
+            keyboardType: type == FormType.phone
+                ? TextInputType.number
+                : TextInputType.none,
+            // バリデーション
+            validator: validator,
+            // 文字数を11文字に限定
+            maxLength: maxLength,
+            decoration: InputDecoration(
+              hintText: hintText,
+              enabledBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(
+                  width: 2,
+                  color: Colors.grey,
                 ),
-                focusedBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 2,
-                    color: Colors.grey,
-                  ),
+              ),
+              focusedBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(
+                  width: 2,
+                  color: Colors.grey,
                 ),
               ),
             ),

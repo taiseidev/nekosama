@@ -28,6 +28,7 @@ dependencies:
   riverpod_generator:
   riverpod_annotation: ^1.1.1
   pin_code_fields: ^7.4.0
+  timelines: ^0.1.0
 
 dev_dependencies:
   flutter_test:
@@ -42,6 +43,7 @@ flutter:
   assets:
     - assets/loading/
     - assets/images/
+
   fonts:
    - family: Train One
      fonts:
