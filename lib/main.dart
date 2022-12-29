@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nekosama/app.dart';
-import 'package:nekosama/firebase_options_dev.dart' as dev;
-import 'package:nekosama/firebase_options_prod.dart' as prod;
-import 'package:nekosama/utils/provider_logger.dart';
+import 'package:nekosama/firebase_options/firebase_options_dev.dart' as dev;
+import 'package:nekosama/firebase_options/firebase_options_prod.dart' as prod;
+import 'package:nekosama/src/utils/provider_logger.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

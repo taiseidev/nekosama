@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nekosama/gen/fonts.gen.dart';
-import 'package:nekosama/ui/router/router.dart';
-import 'package:nekosama/ui/widgets/loading.dart';
-import 'package:nekosama/utils/loading.dart';
-import 'package:nekosama/utils/scaffold_messenger_service.dart';
+import 'package:nekosama/src/common_widgets/loading.dart';
+import 'package:nekosama/src/gen/fonts.gen.dart';
+import 'package:nekosama/src/router/router.dart';
+import 'package:nekosama/src/utils/loading.dart';
+import 'package:nekosama/src/utils/scaffold_messenger_service.dart';
 
 class App extends ConsumerWidget {
   const App({super.key});
