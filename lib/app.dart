@@ -24,7 +24,6 @@ class App extends ConsumerWidget {
           debugShowCheckedModeBanner: false,
           scaffoldMessengerKey: ref.watch(scaffoldMessengerKeyProvider),
           theme: ThemeData(
-            primarySwatch: Colors.blue,
             fontFamily: FontFamily.notoSansJP,
           ),
           builder: (context, child) {

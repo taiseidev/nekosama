@@ -6,7 +6,7 @@ enum FormType {
   other,
 }
 
-class AuthTextForm extends StatefulWidget {
+class AuthTextForm extends StatelessWidget {
   const AuthTextForm({
     super.key,
     required this.title,
@@ -29,40 +29,35 @@ class AuthTextForm extends StatefulWidget {
   final String? Function(String?)? validator;
 
   @override
-  State<AuthTextForm> createState() => _AuthTextFormState();
-}
-
-class _AuthTextFormState extends State<AuthTextForm> {
-  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 80),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.title),
+          Text(title),
           Form(
-            key: widget.formKey,
+            key: formKey,
             child: TextFormField(
-              focusNode: widget.focusNode,
-              controller: widget.controller,
+              focusNode: focusNode,
+              controller: controller,
               // 画面遷移時に自動でフォーカス
               autofocus: true,
               inputFormatters: [
                 // 入力されるTextを数字に限定
-                if (widget.type == FormType.phone)
+                if (type == FormType.phone)
                   FilteringTextInputFormatter.digitsOnly
               ],
               // キーボードを数字のみに設定
-              keyboardType: widget.type == FormType.phone
+              keyboardType: type == FormType.phone
                   ? TextInputType.number
                   : TextInputType.none,
               // バリデーション
-              validator: widget.validator,
+              validator: validator,
               // 文字数を11文字に限定
-              maxLength: widget.maxLength,
+              maxLength: maxLength,
               decoration: InputDecoration(
-                hintText: widget.hintText,
+                hintText: hintText,
                 enabledBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(
                     width: 2,
@@ -81,11 +76,5 @@ class _AuthTextFormState extends State<AuthTextForm> {
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    widget.controller.dispose();
   }
 }

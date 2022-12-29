@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nekosama/app.dart';
 import 'package:nekosama/firebase_options_dev.dart' as dev;
+import 'package:nekosama/firebase_options_prod.dart' as prod;
 import 'package:nekosama/utils/provider_logger.dart';
 
 Future<void> main() async {
@@ -30,8 +31,9 @@ Future<void> main() async {
 }
 
 Future<void> setFirebase({required String flavor}) async {
-  // prodが動かないのでいったん決め打ちでdevを使用
-  final firebaseOptions = dev.DefaultFirebaseOptions.currentPlatform;
+  final firebaseOptions = flavor == 'prod'
+      ? prod.DefaultFirebaseOptions.currentPlatform
+      : dev.DefaultFirebaseOptions.currentPlatform;
 
   // Firebase の初期化
   await Firebase.initializeApp(options: firebaseOptions);

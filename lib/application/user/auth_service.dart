@@ -11,9 +11,9 @@ class AuthService extends _$AuthService {
   }
 
   Future<void> signInPhoneNumber(String phoneNumber) async {
-    state = const AsyncValue.loading();
-
     final repository = ref.read(firebaseUserRepositoryProvider);
+
+    state = const AsyncValue.loading();
 
     state = await AsyncValue.guard(() async {
       await repository.signIn(phoneNumber);
