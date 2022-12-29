@@ -9,6 +9,16 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsImagesGen {
+  const $AssetsImagesGen();
+
+  /// File path: assets/images/nikukyu.png
+  AssetGenImage get nikukyu => const AssetGenImage('assets/images/nikukyu.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [nikukyu];
+}
+
 class $AssetsLoadingGen {
   const $AssetsLoadingGen();
 
@@ -22,6 +32,7 @@ class $AssetsLoadingGen {
 class Assets {
   Assets._();
 
+  static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsLoadingGen loading = $AssetsLoadingGen();
 }
 

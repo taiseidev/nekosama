@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_service.dart';
+part of 'auth_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,19 +29,20 @@ class _SystemHash {
   }
 }
 
-String _$AuthServiceHash() => r'7d3d31294fef4b6b8a7b5fa4e95e4be52bb2f4a6';
+String _$AuthControllerHash() => r'ac5f5913d7abb5bfc1483c1301f207f2cde06740';
 
-/// See also [AuthService].
-final authServiceProvider =
-    AutoDisposeNotifierProvider<AuthService, AsyncValue<void>>(
-  AuthService.new,
-  name: r'authServiceProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$AuthServiceHash,
+/// See also [AuthController].
+final authControllerProvider =
+    AutoDisposeNotifierProvider<AuthController, AsyncValue<void>>(
+  AuthController.new,
+  name: r'authControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$AuthControllerHash,
 );
-typedef AuthServiceRef = AutoDisposeNotifierProviderRef<AsyncValue<void>>;
+typedef AuthControllerRef = AutoDisposeNotifierProviderRef<AsyncValue<void>>;
 
-abstract class _$AuthService extends AutoDisposeNotifier<AsyncValue<void>> {
+abstract class _$AuthController extends AutoDisposeNotifier<AsyncValue<void>> {
   @override
   AsyncValue<void> build();
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:nekosama/gen/fonts.gen.dart';
 import 'package:nekosama/src/common_widgets/buttons/cat_button.dart';
 import 'package:nekosama/src/common_widgets/stack_with_background.dart';
-import 'package:nekosama/src/gen/fonts.gen.dart';
 import 'package:nekosama/src/utils/constants/colors.dart';
 import 'package:nekosama/src/utils/constants/string.dart';
 
@@ -13,7 +13,6 @@ class TopPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: scaffoldBackgroundColor,
-      // キーボードがWidgetを押し上げないようにする
       resizeToAvoidBottomInset: false,
       body: StackWithBackground(
         child: Center(

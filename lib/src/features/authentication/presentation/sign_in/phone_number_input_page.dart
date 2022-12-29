@@ -3,22 +3,23 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nekosama/src/common_widgets/buttons/primary_back_button.dart';
 import 'package:nekosama/src/common_widgets/buttons/primary_button.dart';
 import 'package:nekosama/src/common_widgets/stack_with_background.dart';
 import 'package:nekosama/src/common_widgets/text_form/auth_text_form.dart';
-import 'package:nekosama/src/features/authentication/presentation/sign_in/auth_service.dart';
+import 'package:nekosama/src/features/authentication/presentation/sign_in/auth_controller.dart';
 import 'package:nekosama/src/utils/constants/colors.dart';
 import 'package:nekosama/src/utils/constants/string.dart';
 import 'package:nekosama/src/utils/extensions/async_value.dart';
 import 'package:nekosama/src/utils/validator/phone_validator.dart';
 
-class SignInPage extends HookConsumerWidget {
-  const SignInPage({super.key});
+class PhoneNumberInputPage extends HookConsumerWidget {
+  const PhoneNumberInputPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.handleAsyncValue<void>(
-      authServiceProvider,
+      authControllerProvider,
       complete: (context, data) async {
         // 認証コード入力画面へ遷移
         context.push('/authCodeInput');
@@ -39,15 +40,7 @@ class SignInPage extends HookConsumerWidget {
       body: StackWithBackground(
         child: Column(
           children: [
-            // 左寄せにするためRowで囲む
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () => context.pop(),
-                  icon: const Icon(Icons.arrow_back_ios_rounded),
-                ),
-              ],
-            ),
+            const PrimaryBackButton(),
             const Gap(50),
             const Text(
               inputPhoneNumber,
@@ -80,7 +73,7 @@ class SignInPage extends HookConsumerWidget {
                   focusNode.unfocus();
                   // ログイン認証
                   await ref
-                      .read(authServiceProvider.notifier)
+                      .read(authControllerProvider.notifier)
                       .signInPhoneNumber(controller.text);
                   // フォームをクリア
                   controller.clear();

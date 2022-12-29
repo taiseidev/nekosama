@@ -27,6 +27,7 @@ dependencies:
   flutter_signin_button:
   riverpod_generator:
   riverpod_annotation: ^1.1.1
+  pin_code_fields: ^7.4.0
 
 dev_dependencies:
   flutter_test:
@@ -40,6 +41,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/loading/
+    - assets/images/
   fonts:
    - family: Train One
      fonts:

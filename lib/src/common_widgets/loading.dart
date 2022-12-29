@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nekosama/src/gen/assets.gen.dart';
+import 'package:nekosama/gen/assets.gen.dart';
 
 // 主に使用するローディング
 class PrimaryLoading extends StatelessWidget {

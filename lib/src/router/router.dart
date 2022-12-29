@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nekosama/src/common_widgets/top_page.dart';
 import 'package:nekosama/src/features/authentication/presentation/sign_in/auth_code_input_page.dart';
-import 'package:nekosama/src/features/authentication/presentation/sign_in/sign_in_page.dart';
+import 'package:nekosama/src/features/authentication/presentation/sign_in/phone_number_input_page.dart';
 import 'package:nekosama/src/router/not_found_page.dart';
 import 'package:nekosama/src/utils/global_key.dart';
 
@@ -23,7 +23,7 @@ final routerProvider = Provider<GoRouter>(
         name: 'signIn',
         path: '/signIn',
         builder: (BuildContext context, GoRouterState state) {
-          return const SignInPage();
+          return const PhoneNumberInputPage();
         },
       ),
       GoRoute(
