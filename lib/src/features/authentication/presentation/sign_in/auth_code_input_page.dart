@@ -117,7 +117,7 @@ class AuthCodeInputPage extends HookConsumerWidget {
                     debugPrint('認証');
                     await ref
                         .read(authControllerProvider.notifier)
-                        .signInPhoneNumber(controller.text);
+                        .verifyPhoneNumber(controller.text);
                   }
                 },
               ),

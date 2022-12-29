@@ -149,9 +149,10 @@ class NameEmailInputPage extends HookConsumerWidget {
                   emailFocusNode.unfocus();
                   debugPrint('登録が完了しました');
                   // ログイン認証
-                  await ref
-                      .read(authControllerProvider.notifier)
-                      .signInPhoneNumber(nameController.text);
+                  await ref.read(authControllerProvider.notifier).createUser(
+                        name: nameController.text,
+                        email: emailController.text,
+                      );
                   nameController.clear();
                   emailController.clear();
                 }

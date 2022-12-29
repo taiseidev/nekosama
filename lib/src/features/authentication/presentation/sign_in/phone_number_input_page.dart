@@ -36,7 +36,6 @@ class PhoneNumberInputPage extends HookConsumerWidget {
 
     final focusNode = FocusNode();
 
-    const processIndex = 0;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: scaffoldBackgroundColor,
@@ -80,7 +79,7 @@ class PhoneNumberInputPage extends HookConsumerWidget {
                   // ログイン認証
                   await ref
                       .read(authControllerProvider.notifier)
-                      .signInPhoneNumber(controller.text);
+                      .verifyPhoneNumber(controller.text);
                   // フォームをクリア
                   controller.clear();
                 }
