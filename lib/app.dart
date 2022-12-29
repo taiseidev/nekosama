@@ -22,7 +22,6 @@ class App extends ConsumerWidget {
           routeInformationParser: router.routeInformationParser,
           routeInformationProvider: router.routeInformationProvider,
           debugShowCheckedModeBanner: false,
-          // navigatorKey: ref.watch(navigatorKeyProvider),
           scaffoldMessengerKey: ref.watch(scaffoldMessengerKeyProvider),
           theme: ThemeData(
             primarySwatch: Colors.blue,

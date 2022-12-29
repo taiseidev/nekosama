@@ -26,9 +26,7 @@ class TopPageBody extends ConsumerWidget {
             Gap(20),
             Text(
               subTitle,
-              style: TextStyle(
-                fontSize: 20,
-              ),
+              style: TextStyle(fontSize: 20),
             ),
             Gap(60),
             CatButton(),

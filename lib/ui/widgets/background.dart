@@ -1,8 +1,8 @@
 import 'package:blobs/blobs.dart';
 import 'package:flutter/material.dart';
 
-class PrimaryBackground extends StatelessWidget {
-  const PrimaryBackground({super.key});
+class BackGround extends StatelessWidget {
+  const BackGround({super.key});
 
   @override
   Widget build(BuildContext context) {

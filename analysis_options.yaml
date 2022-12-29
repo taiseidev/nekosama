@@ -11,3 +11,4 @@ analyzer:
 linter:
   rules:
     sort_pub_dependencies: false
+    use_setters_to_change_properties: false

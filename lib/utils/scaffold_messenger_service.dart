@@ -1,28 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nekosama/ui/widgets/snack_bar.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final scaffoldMessengerKeyProvider = Provider(
-  (_) => GlobalKey<ScaffoldMessengerState>(),
-);
+part 'scaffold_messenger_service.g.dart';
 
-final scaffoldMessengerServiceProvider =
-    Provider.autoDispose<ScaffoldMessengerService>(
-  ScaffoldMessengerService.new,
-);
+@riverpod
+GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey(
+  ScaffoldMessengerKeyRef ref,
+) =>
+    GlobalKey<ScaffoldMessengerState>();
+
+@riverpod
+ScaffoldMessengerService scaffoldMessengerService(
+  ScaffoldMessengerServiceRef ref,
+) =>
+    ScaffoldMessengerService(ref);
 
 class ScaffoldMessengerService {
-  ScaffoldMessengerService(this._ref);
+  ScaffoldMessengerService(this.ref);
 
-  final AutoDisposeProviderRef<ScaffoldMessengerService> _ref;
+  final AutoDisposeProviderRef<ScaffoldMessengerService> ref;
 
-  /// スナックバーを表示
+  // スナックバーを表示
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBar(
     String message, {
     bool removeCurrentSnackBar = true,
   }) {
     final scaffoldMessengerState =
-        _ref.watch(scaffoldMessengerKeyProvider).currentState!;
+        ref.watch(scaffoldMessengerKeyProvider).currentState!;
 
     if (removeCurrentSnackBar) {
       // 前のスナックバーを取り除く

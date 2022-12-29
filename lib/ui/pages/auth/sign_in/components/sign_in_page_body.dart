@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nekosama/application/user/auth_service.dart';
 import 'package:nekosama/ui/widgets/buttons/primary_button.dart';
 import 'package:nekosama/ui/widgets/stack_with_background.dart';
+import 'package:nekosama/ui/widgets/text_form/auth_text_form.dart';
 import 'package:nekosama/utils/constants/string.dart';
 import 'package:nekosama/utils/extensions/async_value.dart';
 import 'package:nekosama/utils/validator/phone_validator.dart';
@@ -16,7 +17,7 @@ class SignInPageBody extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.handleAsyncValue<void>(
-      loginStateProvider,
+      authServiceProvider,
       complete: (context, data) async {
         // 認証コード入力画面へ遷移
         context.push('/authCodeInput');
@@ -29,6 +30,8 @@ class SignInPageBody extends HookConsumerWidget {
     final controller = useTextEditingController();
 
     final formKey = GlobalKey<FormState>();
+
+    final focusNode = FocusNode();
 
     return StackWithBackground(
       child: Column(
@@ -51,61 +54,31 @@ class SignInPageBody extends HookConsumerWidget {
             ),
           ),
           const Gap(80),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 80),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('電話番号'),
-                Form(
-                  key: formKey,
-                  child: TextFormField(
-                    controller: controller,
-                    // 画面遷移時に自動でフォーカス
-                    autofocus: true,
-                    inputFormatters: [
-                      // 入力されるTextを数字に限定
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    // キーボードを数字のみに設定
-                    keyboardType: TextInputType.number,
-                    // バリデーション
-                    validator: (value) {
-                      if (!phoneValidator.validate(value)) {
-                        return phoneValidator.getErrorMessage();
-                      }
-                      return null;
-                    },
-                    // 文字数を11文字に限定
-                    maxLength: 11,
-                    decoration: const InputDecoration(
-                      hintText: 'ハイフンなしで入力',
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 2,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 2,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          AuthTextForm(
+            title: '電話番号',
+            formKey: formKey,
+            controller: controller,
+            validator: (value) {
+              if (!phoneValidator.validate(value)) {
+                return phoneValidator.getErrorMessage();
+              }
+              return null;
+            },
+            type: FormType.phone,
+            maxLength: 11,
+            hintText: 'ハイフンなしで入力',
+            focusNode: focusNode,
           ),
           const Gap(40),
           PrimaryButton(
             onTap: () async {
               if (formKey.currentState!.validate()) {
                 // フォーカスを外す
-                FocusManager.instance.primaryFocus?.unfocus();
+                focusNode.unfocus();
                 // ログイン認証
-                await ref.read(userServiceProvider).login();
+                await ref
+                    .read(authServiceProvider.notifier)
+                    .signInPhoneNumber(controller.text);
                 // フォームをクリア
                 controller.clear();
               }
@@ -117,59 +90,3 @@ class SignInPageBody extends HookConsumerWidget {
     );
   }
 }
-
-/// ログイン処理状態
-final loginStateProvider = StateProvider<AsyncValue<void>>(
-  (_) => const AsyncValue.data(null),
-);
-
-/// ユーザーサービスプロバイダー
-final userServiceProvider = Provider(
-  UserService.new,
-);
-
-class UserService {
-  UserService(this.ref);
-
-  final Ref ref;
-
-  /// ログインする
-  Future<void> login() async {
-    final notifier = ref.read(loginStateProvider.notifier);
-
-    // ログイン結果をローディング中にする
-    notifier.state = const AsyncValue.loading();
-
-    // ログイン処理を実行する
-    notifier.state = await AsyncValue.guard(() async {
-      // ここで実際にログイン処理を非同期で行う
-      await Future<void>.delayed(const Duration(seconds: 3));
-    });
-  }
-}
-
-
-
-            // const Gap(20),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: const [
-            //     Divider(
-            //       thickness: 2,
-            //     ),
-            //     Text('OR'),
-            //     Divider(
-            //       thickness: 2,
-            //     ),
-            //   ],
-            // ),
-            // SizedBox(
-            //   child: SignInButton(
-            //     Buttons.Google,
-            //     onPressed: () {},
-            //   ),
-            // ),
-            // SignInButton(
-            //   Buttons.Apple,
-            //   onPressed: () {},
-            // ),

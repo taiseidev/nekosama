@@ -24,7 +24,9 @@ dependencies:
   blobs:
   gap:
   go_router:
-  flutter_signin_button: ^2.0.0
+  flutter_signin_button:
+  riverpod_generator:
+  riverpod_annotation: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -32,6 +34,7 @@ dev_dependencies:
   pedantic_mono:
   device_preview:
   go_router_builder:
+
 
 flutter:
   uses-material-design: true

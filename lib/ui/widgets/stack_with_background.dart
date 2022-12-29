@@ -14,8 +14,10 @@ class StackWithBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        const PrimaryBackground(),
-        SafeArea(child: child),
+        const BackGround(),
+        SafeArea(
+          child: child,
+        ),
       ],
     );
   }

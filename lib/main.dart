@@ -1,5 +1,3 @@
-// ignore: depend_on_referenced_packages
-import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,23 +12,27 @@ Future<void> main() async {
   const flavor = String.fromEnvironment('FLAVOR');
   debugPrint('環境：$flavor');
 
+  // Firebaseの読み込み
+  await setFirebase(flavor: flavor);
+
+  // 画面の向きを固定する。
+  await SystemChrome.setPreferredOrientations(
+    [DeviceOrientation.portraitUp],
+  );
+
+  runApp(
+    ProviderScope(
+      // Providerのライフサイクルを監視
+      observers: [ProviderLogger()],
+      child: const App(),
+    ),
+  );
+}
+
+Future<void> setFirebase({required String flavor}) async {
   // prodが動かないのでいったん決め打ちでdevを使用
   final firebaseOptions = dev.DefaultFirebaseOptions.currentPlatform;
 
   // Firebase の初期化
   await Firebase.initializeApp(options: firebaseOptions);
-
-  // 画面の向きを固定する。
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
-  runApp(
-    DevicePreview(
-      isToolbarVisible: false,
-      builder: (BuildContext context) => ProviderScope(
-        // Providerのライフサイクルを監視
-        observers: [ProviderLogger()],
-        child: const App(),
-      ),
-    ),
-  );
 }
