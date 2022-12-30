@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nekosama/src/utils/global_key.dart';
+import 'package:nekosama/src/router/router.dart';
 import 'package:nekosama/src/utils/loading.dart';
 import 'package:nekosama/src/utils/scaffold_messenger_service.dart';
 

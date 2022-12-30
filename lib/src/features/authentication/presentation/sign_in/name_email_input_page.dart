@@ -165,24 +165,3 @@ class NameEmailInputPage extends HookConsumerWidget {
     );
   }
 }
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return false;
-      },
-      child: const Scaffold(
-        backgroundColor: scaffoldBackgroundColor,
-        body: StackWithBackground(
-          child: Center(
-            child: Text('登録が完了しました'),
-          ),
-        ),
-      ),
-    );
-  }
-}

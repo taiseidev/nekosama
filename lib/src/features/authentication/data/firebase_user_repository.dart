@@ -13,6 +13,7 @@ FirebaseUserRepository firebaseUserRepository(FirebaseUserRepositoryRef ref) =>
     FirebaseUserRepository();
 
 class FirebaseUserRepository {
+  // TODO:未実装（iosだとProfileを作成する必要があるため、ある程度実装が完了してから電話番号認証を追加する）
   Future<void> signIn(String phoneNumber) async {
     await Future<void>.delayed(const Duration(seconds: 3));
     await FirebaseAuth.instance.verifyPhoneNumber(
