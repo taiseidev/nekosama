@@ -38,7 +38,8 @@ class ScaffoldWithBottomNavBar extends HookConsumerWidget {
         currentIndex.value = index;
         // 選択したタブの画面へ遷移
         context.go(tab.path);
-      } else if (index == currentIndex.value && Navigator.canPop(context)) {
+      } else if (GoRouter.of(context).canPop()) {
+        debugPrint('詳細画面');
         context.pop();
       }
     }
