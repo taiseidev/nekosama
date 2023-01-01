@@ -24,7 +24,7 @@ final navigatorKeyProvider = Provider(
 
 final routerProvider = Provider<GoRouter>(
   (ref) => GoRouter(
-    initialLocation: '/home',
+    initialLocation: '/ho',
     debugLogDiagnostics: true,
     navigatorKey: ref.watch(navigatorKeyProvider),
     routes: [
@@ -81,7 +81,7 @@ final routerProvider = Provider<GoRouter>(
             path: '/search',
             pageBuilder: (context, state) => NoTransitionPage<void>(
               key: state.pageKey,
-              child: SearchPage(),
+              child: const SearchPage(),
             ),
           ),
           GoRoute(
