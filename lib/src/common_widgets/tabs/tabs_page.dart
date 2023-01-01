@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:chewie/chewie.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nekosama/src/common_widgets/stack_with_background.dart';
 import 'package:nekosama/src/utils/constants/colors.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -38,8 +42,9 @@ class ScaffoldWithBottomNavBar extends HookConsumerWidget {
         currentIndex.value = index;
         // 選択したタブの画面へ遷移
         context.go(tab.path);
-      } else if (GoRouter.of(context).canPop()) {
-        debugPrint('詳細画面');
+      }
+      // 同一のタブをタップしたらpopする
+      if (index == currentIndex.value && GoRouter.of(context).canPop()) {
         context.pop();
       }
     }
@@ -131,65 +136,90 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class SearchPage extends StatefulWidget {
+final cameraProvider = FutureProvider<Widget>((ref) async {
+  final storageRef =
+      FirebaseStorage.instance.ref().child('users/sora/video.png');
+
+  final video = await storageRef.getDownloadURL();
+
+  final videoPlayerController = VideoPlayerController.network(video);
+  await videoPlayerController.initialize();
+
+  final chewieController = ChewieController(
+    videoPlayerController: videoPlayerController,
+    autoPlay: true,
+    looping: true,
+  );
+
+  return Chewie(
+    controller: chewieController,
+  );
+});
+
+class SearchPage extends ConsumerWidget {
   const SearchPage({super.key});
 
   @override
-  State<SearchPage> createState() => _SearchPageState();
-}
-
-class _SearchPageState extends State<SearchPage> {
-  late final VideoPlayerController videoPlayerController;
-  late final Widget playerWidget;
-
-  @override
-  void initState() {
-    super.initState();
-    videoPlayerController = VideoPlayerController.network(
-      'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-    );
-    Future(() async {
-      await videoPlayerController.initialize();
-    });
-    final chewieController = ChewieController(
-      aspectRatio: 2 / 3,
-      videoPlayerController: videoPlayerController,
-      autoPlay: true,
-      looping: true,
-    );
-
-    playerWidget = Chewie(
-      controller: chewieController,
-    );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    videoPlayerController.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final plyerWidget = ref.watch(cameraProvider);
     return WillPopScope(
       onWillPop: () async {
         return false;
       },
       child: Scaffold(
+        extendBody: true,
+        extendBodyBehindAppBar: true,
         backgroundColor: scaffoldBackgroundColor,
         body: StackWithBackground(
-          child: playerWidget,
+          child: plyerWidget.when(
+            data: (data) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 300,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Expanded(child: data),
+                  ),
+                ],
+              );
+            },
+            error: (error, stackTrace) {
+              return Text(error.toString());
+            },
+            loading: () {
+              return const CircularProgressIndicator();
+            },
+          ),
         ),
       ),
     );
   }
 }
 
-class PostPage extends StatelessWidget {
+class PostPage extends HookConsumerWidget {
   const PostPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    useEffect(
+      () {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+          final video =
+              await ImagePicker().pickVideo(source: ImageSource.gallery);
+          final file = File(video!.path);
+          final storageRef =
+              FirebaseStorage.instance.ref().child('users/sora/video.png');
+
+          await storageRef.putFile(file);
+        });
+        return null;
+      },
+      const [],
+    );
     return WillPopScope(
       onWillPop: () async {
         return false;
