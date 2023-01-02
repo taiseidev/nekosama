@@ -26,11 +26,14 @@ class $AssetsImagesGen {
 class $AssetsLoadingGen {
   const $AssetsLoadingGen();
 
+  /// File path: assets/loading/not_found_loading.json
+  String get notFoundLoading => 'assets/loading/not_found_loading.json';
+
   /// File path: assets/loading/primary_loading.json
   String get primaryLoading => 'assets/loading/primary_loading.json';
 
   /// List of all assets
-  List<String> get values => [primaryLoading];
+  List<String> get values => [notFoundLoading, primaryLoading];
 }
 
 class Assets {

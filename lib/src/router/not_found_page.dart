@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:nekosama/gen/assets.gen.dart';
 import 'package:nekosama/src/common_widgets/buttons/primary_button.dart';
 import 'package:nekosama/src/common_widgets/stack_with_background.dart';
 import 'package:nekosama/src/common_widgets/top_page.dart';
@@ -26,8 +27,8 @@ class NotFoundPage extends StatelessWidget {
                 width: 300,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30),
-                  child: Lottie.network(
-                    'https://assets9.lottiefiles.com/private_files/lf30_kxsmsdmm.json',
+                  child: Lottie.asset(
+                    Assets.loading.notFoundLoading,
                     fit: BoxFit.cover,
                   ),
                 ),
