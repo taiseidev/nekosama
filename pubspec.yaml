@@ -37,6 +37,7 @@ dependencies:
   video_player: ^2.4.10
   image_picker: ^0.8.6
   firebase_storage: ^11.0.10
+  flutter_svg: ^1.1.6
 
 dev_dependencies:
   flutter_test:
@@ -53,6 +54,7 @@ flutter:
   assets:
     - assets/loading/
     - assets/images/
+    - assets/tabs/
 
   fonts:
    - family: Train One

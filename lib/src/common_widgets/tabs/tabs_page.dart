@@ -2,8 +2,10 @@ import 'package:chewie/chewie.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nekosama/gen/assets.gen.dart';
 import 'package:nekosama/src/common_widgets/stack_with_background.dart';
 import 'package:nekosama/src/utils/constants/colors.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -68,35 +70,50 @@ final tabsProvider = Provider<List<SalomonBottomBarItem>>(
   (_) => [
     /// Home
     SalomonBottomBarItem(
-      icon: const Icon(Icons.home),
+      icon: SvgPicture.asset(
+        Assets.tabs.home,
+        color: Colors.purple,
+      ),
       title: const Text('ホーム'),
       selectedColor: Colors.purple,
     ),
 
     /// Search
     SalomonBottomBarItem(
-      icon: const Icon(Icons.search),
+      icon: SvgPicture.asset(
+        Assets.tabs.search,
+        color: Colors.orange,
+      ),
       title: const Text('検索'),
       selectedColor: Colors.orange,
     ),
 
     /// Likes
     SalomonBottomBarItem(
-      icon: const Icon(Icons.add),
+      icon: SvgPicture.asset(
+        Assets.tabs.add,
+        color: Colors.blue,
+      ),
       title: const Text('投稿'),
       selectedColor: Colors.blue,
     ),
 
     /// Likes
     SalomonBottomBarItem(
-      icon: const Icon(Icons.group),
+      icon: const Icon(
+        Icons.group,
+        color: Colors.pink,
+      ),
       title: const Text('コミュニティ'),
       selectedColor: Colors.pink,
     ),
 
     /// Profile
     SalomonBottomBarItem(
-      icon: const Icon(Icons.person),
+      icon: SvgPicture.asset(
+        Assets.tabs.user,
+        color: Colors.teal,
+      ),
       title: const Text('プロフィール'),
       selectedColor: Colors.teal,
     ),

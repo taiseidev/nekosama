@@ -36,11 +36,31 @@ class $AssetsLoadingGen {
   List<String> get values => [notFoundLoading, primaryLoading];
 }
 
+class $AssetsTabsGen {
+  const $AssetsTabsGen();
+
+  /// File path: assets/tabs/add.svg
+  String get add => 'assets/tabs/add.svg';
+
+  /// File path: assets/tabs/home.svg
+  String get home => 'assets/tabs/home.svg';
+
+  /// File path: assets/tabs/search.svg
+  String get search => 'assets/tabs/search.svg';
+
+  /// File path: assets/tabs/user.svg
+  String get user => 'assets/tabs/user.svg';
+
+  /// List of all assets
+  List<String> get values => [add, home, search, user];
+}
+
 class Assets {
   Assets._();
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsLoadingGen loading = $AssetsLoadingGen();
+  static const $AssetsTabsGen tabs = $AssetsTabsGen();
 }
 
 class AssetGenImage {
