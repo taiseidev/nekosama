@@ -13,11 +13,6 @@ final _shellNavigatorKeyProvider = Provider(
   (_) => GlobalKey<NavigatorState>(),
 );
 
-// ShellRoute用のNavigator
-final _parentNavigatorKeyProvider = Provider(
-  (_) => GlobalKey<NavigatorState>(),
-);
-
 /// ダイアログ表示用のGlobalKey
 final navigatorKeyProvider = Provider(
   (_) => GlobalKey<NavigatorState>(),
