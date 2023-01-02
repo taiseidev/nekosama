@@ -12,6 +12,7 @@ import 'package:nekosama/src/router/not_found_page.dart';
 final _shellNavigatorKeyProvider = Provider(
   (_) => GlobalKey<NavigatorState>(),
 );
+
 // ShellRoute用のNavigator
 final _parentNavigatorKeyProvider = Provider(
   (_) => GlobalKey<NavigatorState>(),
@@ -24,7 +25,7 @@ final navigatorKeyProvider = Provider(
 
 final routerProvider = Provider<GoRouter>(
   (ref) => GoRouter(
-    initialLocation: '/ho',
+    initialLocation: '/home',
     debugLogDiagnostics: true,
     navigatorKey: ref.watch(navigatorKeyProvider),
     routes: [
