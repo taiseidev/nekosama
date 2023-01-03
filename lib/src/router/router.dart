@@ -6,6 +6,7 @@ import 'package:nekosama/src/common_widgets/top_page.dart';
 import 'package:nekosama/src/features/authentication/presentation/sign_in/auth_code_input_page.dart';
 import 'package:nekosama/src/features/authentication/presentation/sign_in/name_email_input_page.dart';
 import 'package:nekosama/src/features/authentication/presentation/sign_in/phone_number_input_page.dart';
+import 'package:nekosama/src/features/post/presentation/home_page.dart';
 import 'package:nekosama/src/router/not_found_page.dart';
 
 // ShellRoute用のNavigator

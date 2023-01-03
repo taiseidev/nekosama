@@ -23,7 +23,7 @@ class AuthCodeInputPage extends HookConsumerWidget {
       authControllerProvider,
       complete: (context, data) async {
         // 認証コード入力画面へ遷移
-        context.push('/nameEmailInputPage');
+        context.push('/nameEmailInput');
       },
     );
     final authCodeValidator = AuthCodeValidator();
@@ -49,62 +49,64 @@ class AuthCodeInputPage extends HookConsumerWidget {
                 style: TextStyle(fontSize: 20),
               ),
               const Gap(80),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: Column(
-                  children: [
-                    Row(
-                      children: const [
-                        Text('認証コード'),
-                      ],
-                    ),
-                    const Gap(8),
-                    Form(
-                      key: formKey,
-                      child: PinCodeTextField(
-                        focusNode: focusNode,
-                        controller: controller,
-                        autoFocus: true,
-                        appContext: context,
-                        length: 6,
-                        obscureText: true,
-                        // 非表示時の画像
-                        obscuringWidget:
-                            Image.asset(Assets.images.nikukyu.path),
-                        // 一度番号を表示してから文字を隠す
-                        blinkWhenObscuring: true,
-                        animationType: AnimationType.scale,
-                        validator: (value) {
-                          if (!authCodeValidator.validate(value)) {
-                            return authCodeValidator.getErrorMessage();
-                          }
-                          return null;
-                        },
-                        autovalidateMode: AutovalidateMode.disabled,
-                        cursorColor: const Color(0xff22345f),
-                        pinTheme: PinTheme(
-                          shape: PinCodeFieldShape.box,
-                          borderRadius: BorderRadius.circular(10),
-                          fieldHeight: 50,
-                          fieldWidth: 40,
-                          activeColor: const Color(0xff22345f),
-                          inactiveColor: const Color(0xff22345f),
-                          selectedColor: const Color(0xff22345f),
-                          activeFillColor: Colors.white,
-                          selectedFillColor: Colors.white,
-                          inactiveFillColor: Colors.white,
-                          errorBorderColor: Colors.white,
-                        ),
-                        animationDuration: const Duration(milliseconds: 300),
-                        enableActiveFill: true,
-                        errorTextSpace: 24,
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) {
-                          debugPrint(value);
-                        },
+              RepaintBoundary(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: const [
+                          Text('認証コード'),
+                        ],
                       ),
-                    ),
-                  ],
+                      const Gap(8),
+                      Form(
+                        key: formKey,
+                        child: PinCodeTextField(
+                          focusNode: focusNode,
+                          controller: controller,
+                          autoFocus: true,
+                          appContext: context,
+                          length: 6,
+                          obscureText: true,
+                          // 非表示時の画像
+                          obscuringWidget:
+                              Image.asset(Assets.images.nikukyu.path),
+                          // 一度番号を表示してから文字を隠す
+                          blinkWhenObscuring: true,
+                          animationType: AnimationType.scale,
+                          validator: (value) {
+                            if (!authCodeValidator.validate(value)) {
+                              return authCodeValidator.getErrorMessage();
+                            }
+                            return null;
+                          },
+                          autovalidateMode: AutovalidateMode.disabled,
+                          cursorColor: const Color(0xff22345f),
+                          pinTheme: PinTheme(
+                            shape: PinCodeFieldShape.box,
+                            borderRadius: BorderRadius.circular(10),
+                            fieldHeight: 50,
+                            fieldWidth: 40,
+                            activeColor: const Color(0xff22345f),
+                            inactiveColor: const Color(0xff22345f),
+                            selectedColor: const Color(0xff22345f),
+                            activeFillColor: Colors.white,
+                            selectedFillColor: Colors.white,
+                            inactiveFillColor: Colors.white,
+                            errorBorderColor: Colors.white,
+                          ),
+                          animationDuration: const Duration(milliseconds: 300),
+                          enableActiveFill: true,
+                          errorTextSpace: 24,
+                          keyboardType: TextInputType.number,
+                          onChanged: (value) {
+                            debugPrint(value);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const Gap(40),

@@ -51,6 +51,15 @@ class ScaffoldWithBottomNavBar extends HookConsumerWidget {
     return Scaffold(
       extendBody: true,
       body: child,
+      floatingActionButton: Visibility(
+        visible: currentIndex.value == 0,
+        child: FloatingActionButton.extended(
+          backgroundColor: const Color(0xfff56958),
+          onPressed: () {},
+          icon: const Icon(Icons.add),
+          label: const Text('投稿'),
+        ),
+      ),
       bottomNavigationBar: DecoratedBox(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -120,43 +129,11 @@ final tabsProvider = Provider<List<SalomonBottomBarItem>>(
   ],
 );
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return false;
-      },
-      child: Scaffold(
-        backgroundColor: scaffoldBackgroundColor,
-        body: StackWithBackground(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('ホーム画面'),
-                ElevatedButton(
-                  onPressed: () {
-                    context.go('/home/detail');
-                  },
-                  child: const Text('詳細画面へ遷移'),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 final cameraProvider = FutureProvider<Widget>((ref) async {
-  final storageRef =
-      FirebaseStorage.instance.ref().child('users/sora/video.png');
-
-  final video = await storageRef.getDownloadURL();
+  final video = await FirebaseStorage.instance
+      .ref()
+      .child('users/sora/video.png')
+      .getDownloadURL();
 
   final videoPlayerController = VideoPlayerController.network(video);
   await videoPlayerController.initialize();
@@ -167,9 +144,7 @@ final cameraProvider = FutureProvider<Widget>((ref) async {
     looping: true,
   );
 
-  return Chewie(
-    controller: chewieController,
-  );
+  return Chewie(controller: chewieController);
 });
 
 class SearchPage extends ConsumerWidget {
