@@ -61,9 +61,8 @@ class ScaffoldWithBottomNavBar extends HookConsumerWidget {
         ),
       ),
       bottomNavigationBar: DecoratedBox(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(30),
         ),
         child: SalomonBottomBar(
           currentIndex: currentIndex.value,
