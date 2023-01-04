@@ -36,6 +36,19 @@ class $AssetsLoadingGen {
   List<String> get values => [notFoundLoading, primaryLoading];
 }
 
+class $AssetsPostGen {
+  const $AssetsPostGen();
+
+  /// File path: assets/post/cat.svg
+  String get cat => 'assets/post/cat.svg';
+
+  /// File path: assets/post/comment.svg
+  String get comment => 'assets/post/comment.svg';
+
+  /// List of all assets
+  List<String> get values => [cat, comment];
+}
+
 class $AssetsTabsGen {
   const $AssetsTabsGen();
 
@@ -60,6 +73,7 @@ class Assets {
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsLoadingGen loading = $AssetsLoadingGen();
+  static const $AssetsPostGen post = $AssetsPostGen();
   static const $AssetsTabsGen tabs = $AssetsTabsGen();
 }
 
