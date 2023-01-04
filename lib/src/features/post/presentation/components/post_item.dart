@@ -80,7 +80,14 @@ class PostItem extends HookConsumerWidget {
                 size: 12,
               ),
               const Spacer(
-                flex: 3,
+                flex: 2,
+              ),
+              IconButton(
+                onPressed: () {
+                  debugPrint('ドットメニューがタップされました');
+                },
+                icon: const Icon(Icons.more_horiz),
+                iconSize: 26,
               ),
             ],
           ),
