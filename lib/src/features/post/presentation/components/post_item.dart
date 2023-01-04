@@ -1,16 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nekosama/gen/assets.gen.dart';
 
-class PostItem extends HookConsumerWidget {
+final isFavoriteProvider = StateProvider<bool>((_) => false);
+
+class PostItem extends ConsumerStatefulWidget {
   const PostItem({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // 「続きを読むを」押下したら投稿欄を広げる
-    final isExpanded = useState(false);
+  PostItemState createState() => PostItemState();
+}
+
+class PostItemState extends ConsumerState<PostItem>
+    with SingleTickerProviderStateMixin {
+  // お気に入りのアニメーションを管理するコントローラー
+  late AnimationController _favoriteController;
+  // コントローラーで生成した値を使って色やサイズなどの値を作ってくれるクラス（Tween）
+  late Animation _favoriteColorAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _favoriteController = AnimationController(
+      duration: const Duration(milliseconds: 100),
+      vsync: this,
+    );
+
+    _favoriteColorAnimation = ColorTween(
+      begin: Colors.transparent,
+      end: Colors.red[400],
+    ).animate(_favoriteController);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _favoriteController.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: 300,
       height: 1000, // 最初は700で設定する
@@ -34,31 +66,70 @@ class PostItem extends HookConsumerWidget {
             ],
           ),
           const SizedBox(height: 8),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: Image.network(
-              'https://images.unsplash.com/photo-1574231164645-d6f0e8553590?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1008&q=80',
-            ),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: Image.network(
+                  'https://images.unsplash.com/photo-1574231164645-d6f0e8553590?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1008&q=80',
+                ),
+              ),
+              SizedBox(
+                width: 200,
+                height: 200,
+                child: AnimatedBuilder(
+                  animation: _favoriteController,
+                  builder: (context, child) {
+                    return IconButton(
+                      color: _favoriteColorAnimation.value as Color,
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.favorite,
+                        size: 100,
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 16),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IconButton(
-                onPressed: () {
-                  debugPrint('コメントがタップされました');
-                },
-                icon: SvgPicture.asset(
-                  Assets.post.comment,
-                  width: 26,
-                ),
-                iconSize: 26,
+              Column(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      debugPrint('コメントがタップされました');
+                    },
+                    icon: SvgPicture.asset(
+                      Assets.post.comment,
+                      width: 26,
+                    ),
+                    iconSize: 26,
+                  ),
+                  // const Text('12件'),
+                ],
               ),
               IconButton(
-                onPressed: () {
-                  debugPrint('お気に入りがタップされました');
+                onPressed: () async {
+                  await HapticFeedback.heavyImpact();
+                  ref
+                      .read(isFavoriteProvider.notifier)
+                      .update((state) => state = !state);
+                  if (ref.watch(isFavoriteProvider)) {
+                    await _favoriteController.forward();
+                    await Future<void>.delayed(const Duration(seconds: 1));
+                    await _favoriteController.reverse();
+                  }
                 },
-                icon: const Icon(Icons.favorite_border_outlined),
+                icon: ref.watch(isFavoriteProvider)
+                    ? Icon(
+                        Icons.favorite,
+                        color: Colors.red[300],
+                      )
+                    : const Icon(Icons.favorite_border_outlined),
                 iconSize: 26,
               ),
               const Spacer(),
