@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:nekosama/src/common_widgets/stack_with_background.dart';
 import 'package:nekosama/src/features/post/presentation/components/post_item.dart';
 import 'package:nekosama/src/utils/constants/colors.dart';
@@ -8,6 +11,28 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // プラットフォーム（iOS / Android）に合わせてデモ用広告IDを返す
+    String getTestAdBannerUnitId() {
+      var testBannerUnitId = '';
+      if (Platform.isAndroid) {
+        // Android のとき
+        testBannerUnitId =
+            'ca-app-pub-3940256099942544/6300978111'; // Androidのデモ用バナー広告ID
+      } else if (Platform.isIOS) {
+        // iOSのとき
+        testBannerUnitId =
+            'ca-app-pub-3940256099942544/2934735716'; // iOSのデモ用バナー広告ID
+      }
+      return testBannerUnitId;
+    }
+
+    final myBanner = BannerAd(
+      adUnitId: getTestAdBannerUnitId(),
+      size: AdSize.banner,
+      request: const AdRequest(),
+      listener: const BannerAdListener(),
+    )..load();
+
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -47,12 +72,23 @@ class HomePage extends StatelessWidget {
                 // ),
               ),
               SliverFixedExtentList(
-                itemExtent: 1000,
+                itemExtent: 1500,
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    return const Padding(
-                      padding: EdgeInsets.all(16),
-                      child: PostItem(),
+                    return Column(
+                      children: [
+                        if (index % 5 == 0)
+                          Container(
+                            width: double.infinity,
+                            height: 50,
+                            color: Colors.white,
+                            child: AdWidget(ad: myBanner),
+                          ),
+                        const Padding(
+                          padding: EdgeInsets.all(16),
+                          child: PostItem(),
+                        ),
+                      ],
                     );
                   },
                   childCount: 100,
