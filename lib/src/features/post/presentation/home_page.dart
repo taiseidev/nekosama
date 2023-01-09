@@ -48,6 +48,13 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
+              title: const Text(
+                'nekosama',
+                style: TextStyle(
+                  color: Colors.black26,
+                  fontSize: 20,
+                ),
+              ),
               actions: [
                 IconButton(
                   onPressed: () {},

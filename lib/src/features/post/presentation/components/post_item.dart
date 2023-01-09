@@ -50,18 +50,25 @@ class PostItemState extends ConsumerState<PostItem>
     ).animate(_favoriteController);
   }
 
+  Future<void> runFavoriteAnimation() async {
+    await _favoriteController.forward();
+    await Future<void>.delayed(const Duration(seconds: 1));
+    await _favoriteController.reverse();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 600,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          top: BorderSide(),
-          bottom: BorderSide(),
-        ),
-      ),
+      // decoration: const BoxDecoration(
+      //   color: Colors.white,
+      //   border: Border(
+      //     bottom: BorderSide(
+      //       color: Colors.black12,
+      //     ),
+      //   ),
+      // ),
       child: Column(
         children: [
           Padding(
@@ -79,48 +86,54 @@ class PostItemState extends ConsumerState<PostItem>
           ),
           SizedBox(
             height: 300,
-            child: PageView.builder(
-              controller: _controller,
-              itemCount: widget.imageUrls.length,
-              itemBuilder: (context, index) {
-                final image = widget.imageUrls[index];
-                return Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    SizedBox(
-                      width: 400,
-                      height: 300,
-                      child: ClipRRect(
-                        // borderRadius: BorderRadius.circular(30),
-                        child: Image.network(
-                          image,
-                          fit: BoxFit.cover,
+            child: GestureDetector(
+              onDoubleTap: () async {
+                setState(() {
+                  isFavorite = true;
+                });
+                await runFavoriteAnimation();
+              },
+              child: PageView.builder(
+                controller: _controller,
+                itemCount: widget.imageUrls.length,
+                itemBuilder: (context, index) {
+                  final image = widget.imageUrls[index];
+                  return Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      SizedBox(
+                        width: 400,
+                        height: 300,
+                        child: ClipRRect(
+                          child: Image.network(
+                            image,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 200,
-                      height: 200,
-                      child: AnimatedBuilder(
-                        animation: _favoriteController,
-                        builder: (context, child) {
-                          return IconButton(
-                            color: _favoriteColorAnimation.value as Color,
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.favorite,
-                              size: 100,
-                            ),
-                          );
-                        },
+                      SizedBox(
+                        width: 200,
+                        height: 200,
+                        child: AnimatedBuilder(
+                          animation: _favoriteController,
+                          builder: (context, child) {
+                            return IconButton(
+                              color: _favoriteColorAnimation.value as Color,
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.favorite,
+                                size: 100,
+                              ),
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              },
+                    ],
+                  );
+                },
+              ),
             ),
           ),
-          const SizedBox(height: 16),
           Row(
             children: [
               Column(
@@ -143,9 +156,7 @@ class PostItemState extends ConsumerState<PostItem>
                     isFavorite = !isFavorite;
                   });
                   if (isFavorite) {
-                    await _favoriteController.forward();
-                    await Future<void>.delayed(const Duration(seconds: 1));
-                    await _favoriteController.reverse();
+                    await runFavoriteAnimation();
                   }
                 },
                 icon: isFavorite
@@ -173,7 +184,6 @@ class PostItemState extends ConsumerState<PostItem>
               ),
             ],
           ),
-          const SizedBox(height: 16),
           Text(widget.contents)
         ],
       ),

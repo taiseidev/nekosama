@@ -73,8 +73,12 @@ class Assets {
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsLoadingGen loading = $AssetsLoadingGen();
+  static const AssetGenImage logo = AssetGenImage('assets/logo.png');
   static const $AssetsPostGen post = $AssetsPostGen();
   static const $AssetsTabsGen tabs = $AssetsTabsGen();
+
+  /// List of all assets
+  List<AssetGenImage> get values => [logo];
 }
 
 class AssetGenImage {

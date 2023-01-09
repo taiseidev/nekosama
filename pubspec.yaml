@@ -58,6 +58,7 @@ flutter:
     - assets/images/
     - assets/tabs/
     - assets/post/
+    - assets/logo.png
 
   fonts:
    - family: Train One
