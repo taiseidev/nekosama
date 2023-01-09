@@ -2,17 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 	<dict>
-		<key>GADApplicationIdentifier</key>
+		<!-- <key>GADApplicationIdentifier</key>
 		<string>ca-app-pub-5636285754013517/7276227930</string>
 		<key>SKAdNetworkItems</key>
 		<array>
 			<dict>
 				<key>
-					SKAdNetworkIdentifier</key>
+		SKAdNetworkIdentifier</key>
 				<string>
-					cstr6suwn9.skadnetwork</string>
+		cstr6suwn9.skadnetwork</string>
 			</dict>
-		</array>
+		</array> -->
 		<key>CADisableMinimumFrameDurationOnPhone</key>
 		<true />
 		<key>CFBundleDevelopmentRegion</key>
