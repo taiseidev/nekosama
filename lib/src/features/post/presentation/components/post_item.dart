@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -61,14 +62,6 @@ class PostItemState extends ConsumerState<PostItem>
     return SizedBox(
       width: double.infinity,
       height: 600,
-      // decoration: const BoxDecoration(
-      //   color: Colors.white,
-      //   border: Border(
-      //     bottom: BorderSide(
-      //       color: Colors.black12,
-      //     ),
-      //   ),
-      // ),
       child: Column(
         children: [
           Padding(
@@ -77,7 +70,10 @@ class PostItemState extends ConsumerState<PostItem>
               children: [
                 CircleAvatar(
                   radius: 15,
-                  backgroundImage: NetworkImage(widget.profileImageUrl),
+                  child: CachedNetworkImage(
+                    imageUrl: widget.profileImageUrl,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 const SizedBox(width: 8),
                 Flexible(child: Text(widget.userName)),
@@ -104,11 +100,14 @@ class PostItemState extends ConsumerState<PostItem>
                       SizedBox(
                         width: 400,
                         height: 300,
-                        child: ClipRRect(
-                          child: Image.network(
-                            image,
-                            fit: BoxFit.cover,
-                          ),
+                        child: CachedNetworkImage(
+                          imageUrl: image,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
                         ),
                       ),
                       SizedBox(

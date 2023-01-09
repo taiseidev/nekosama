@@ -9,6 +9,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = ScrollController();
     // プラットフォーム（iOS / Android）に合わせてデモ用広告IDを返す
     String getTestAdBannerUnitId() {
       var testBannerUnitId = '';
@@ -30,13 +31,13 @@ class HomePage extends StatelessWidget {
       request: const AdRequest(),
       listener: const BannerAdListener(),
     )..load();
-
     return WillPopScope(
       onWillPop: () async {
         return false;
       },
       child: Scaffold(
         body: CustomScrollView(
+          controller: controller,
           slivers: [
             SliverAppBar(
               leading: const Padding(
@@ -48,11 +49,20 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              title: const Text(
-                'nekosama',
-                style: TextStyle(
-                  color: Colors.black26,
-                  fontSize: 20,
+              title: GestureDetector(
+                onTap: () {
+                  controller.animateTo(
+                    0,
+                    duration: const Duration(seconds: 2),
+                    curve: Curves.ease,
+                  );
+                },
+                child: const Text(
+                  'nekosama',
+                  style: TextStyle(
+                    color: Colors.black26,
+                    fontSize: 20,
+                  ),
                 ),
               ),
               actions: [
