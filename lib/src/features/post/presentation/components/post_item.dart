@@ -3,8 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nekosama/gen/assets.gen.dart';
-
-final isFavoriteProvider = StateProvider<bool>((_) => false);
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class PostItem extends ConsumerStatefulWidget {
   const PostItem({
@@ -17,7 +16,7 @@ class PostItem extends ConsumerStatefulWidget {
 
   final String profileImageUrl;
   final String userName;
-  final String imageUrls;
+  final List<String> imageUrls;
   final String contents;
 
   @override
@@ -30,6 +29,11 @@ class PostItemState extends ConsumerState<PostItem>
   late AnimationController _favoriteController;
   // コントローラーで生成した値を使って色やサイズなどの値を作ってくれるクラス（Tween）
   late Animation<dynamic> _favoriteColorAnimation;
+
+  bool isFavorite = false;
+  double currentPosition = 0;
+
+  final _controller = PageController();
 
   @override
   void initState() {
@@ -47,59 +51,74 @@ class PostItemState extends ConsumerState<PostItem>
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    _favoriteController.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
-      height: 1000, // 最初は700で設定する
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
+      width: double.infinity,
+      height: 600,
+      decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(30),
+        border: Border(
+          top: BorderSide(),
+          bottom: BorderSide(),
+        ),
       ),
       child: Column(
         children: [
-          Row(
-            children: [
-              CircleAvatar(
-                radius: 15,
-                backgroundImage: NetworkImage(widget.profileImageUrl),
-              ),
-              const SizedBox(width: 8),
-              Text(widget.userName),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: Image.network(widget.imageUrls),
-              ),
-              SizedBox(
-                width: 200,
-                height: 200,
-                child: AnimatedBuilder(
-                  animation: _favoriteController,
-                  builder: (context, child) {
-                    return IconButton(
-                      color: _favoriteColorAnimation.value as Color,
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.favorite,
-                        size: 100,
-                      ),
-                    );
-                  },
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 15,
+                  backgroundImage: NetworkImage(widget.profileImageUrl),
                 ),
-              ),
-            ],
+                const SizedBox(width: 8),
+                Flexible(child: Text(widget.userName)),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 300,
+            child: PageView.builder(
+              controller: _controller,
+              itemCount: widget.imageUrls.length,
+              itemBuilder: (context, index) {
+                final image = widget.imageUrls[index];
+                return Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SizedBox(
+                      width: 400,
+                      height: 300,
+                      child: ClipRRect(
+                        // borderRadius: BorderRadius.circular(30),
+                        child: Image.network(
+                          image,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 200,
+                      height: 200,
+                      child: AnimatedBuilder(
+                        animation: _favoriteController,
+                        builder: (context, child) {
+                          return IconButton(
+                            color: _favoriteColorAnimation.value as Color,
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.favorite,
+                              size: 100,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
           const SizedBox(height: 16),
           Row(
@@ -120,16 +139,16 @@ class PostItemState extends ConsumerState<PostItem>
               IconButton(
                 onPressed: () async {
                   await HapticFeedback.heavyImpact();
-                  ref
-                      .read(isFavoriteProvider.notifier)
-                      .update((state) => state = !state);
-                  if (ref.watch(isFavoriteProvider)) {
+                  setState(() {
+                    isFavorite = !isFavorite;
+                  });
+                  if (isFavorite) {
                     await _favoriteController.forward();
                     await Future<void>.delayed(const Duration(seconds: 1));
                     await _favoriteController.reverse();
                   }
                 },
-                icon: ref.watch(isFavoriteProvider)
+                icon: isFavorite
                     ? Icon(
                         Icons.favorite,
                         color: Colors.red[300],
@@ -138,26 +157,15 @@ class PostItemState extends ConsumerState<PostItem>
                 iconSize: 26,
               ),
               const Spacer(),
-              const Icon(
-                Icons.circle,
-                color: Colors.blue,
-                size: 12,
+              SmoothPageIndicator(
+                controller: _controller, // PageController
+                count: widget.imageUrls.length,
+                effect: const ScrollingDotsEffect(
+                  dotWidth: 8,
+                  dotHeight: 8,
+                ),
               ),
-              const SizedBox(width: 8),
-              const Icon(
-                Icons.circle,
-                color: Colors.grey,
-                size: 12,
-              ),
-              const SizedBox(width: 8),
-              const Icon(
-                Icons.circle,
-                color: Colors.grey,
-                size: 12,
-              ),
-              const Spacer(
-                flex: 2,
-              ),
+              const Spacer(flex: 2),
               IconButton(
                 onPressed: () {},
                 icon: const Icon(Icons.more_horiz),
@@ -170,5 +178,11 @@ class PostItemState extends ConsumerState<PostItem>
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _favoriteController.dispose();
   }
 }

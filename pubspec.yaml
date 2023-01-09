@@ -39,6 +39,7 @@ dependencies:
   firebase_storage: ^11.0.10
   flutter_svg: ^1.1.6
   google_mobile_ads: ^2.3.0
+  smooth_page_indicator: ^1.0.0+2
 
 dev_dependencies:
   flutter_test:

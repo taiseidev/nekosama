@@ -2,9 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:nekosama/src/common_widgets/stack_with_background.dart';
 import 'package:nekosama/src/features/post/presentation/components/post_item.dart';
-import 'package:nekosama/src/utils/constants/colors.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -38,91 +36,67 @@ class HomePage extends StatelessWidget {
         return false;
       },
       child: Scaffold(
-        backgroundColor: scaffoldBackgroundColor,
-        body: StackWithBackground(
-          child: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                leading: const CircleAvatar(
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              leading: const Padding(
+                padding: EdgeInsets.all(8),
+                child: CircleAvatar(
                   radius: 10,
                   backgroundImage: NetworkImage(
-                    'https://images.unsplash.com/photo-1664984359266-c548a621db31?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+                    'https://cdn.pixabay.com/photo/2017/08/31/09/01/woman-2699801_960_720.jpg',
                   ),
                 ),
-                actions: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.search,
-                      color: Colors.black,
-                    ),
+              ),
+              actions: [
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.search,
+                    color: Colors.black,
                   ),
-                ],
-                expandedHeight: 60,
-                floating: true,
-                backgroundColor: Colors.white,
-                // pinned: true,
-                elevation: 2,
-                // flexibleSpace: const FlexibleSpaceBar(
-                //   // title: /*省略*/,
-                //   titlePadding: EdgeInsets.all(8),
-                //   collapseMode: CollapseMode.pin,
-                //   centerTitle: true,
-                //   // background: /*省略*/,
-                // ),
-              ),
-              SliverFixedExtentList(
-                itemExtent: 1500,
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return Column(
-                      children: [
-                        if (index % 5 == 0)
-                          Container(
-                            width: double.infinity,
-                            height: 50,
-                            color: Colors.white,
-                            child: AdWidget(ad: myBanner),
-                          ),
-                        const Padding(
-                          padding: EdgeInsets.all(16),
-                          child: PostItem(
-                            profileImageUrl:
-                                'https://images.unsplash.com/photo-1664984359266-c548a621db31?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
-                            userName: 'そらちゃんの日常🐱',
-                            imageUrls:
-                                'https://images.unsplash.com/photo-1574231164645-d6f0e8553590?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1008&q=80',
-                            contents:
-                                '今年はまだ夜が寒くニャイ？\n◉パブリマ出版Award2022 新人賞受賞！◉\n私のフォトブック“ねこ街(ねこまち)”が頂きました！\nただいま年末年始セール開催中です！\nねこ街販売サイトは、プロフィールのリンクをご覧下さい！\n🌿愛猫アカウント @sabi_neko_0301 もよろしくニャ\n演出はしない主義です。',
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                  childCount: 100,
                 ),
+              ],
+              expandedHeight: 60,
+              floating: true,
+              backgroundColor: Colors.white,
+              elevation: 2,
+            ),
+            SliverFixedExtentList(
+              itemExtent: 600,
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  return Column(
+                    children: const [
+                      // if (index % 5 == 0 && index != 0)
+                      //   Container(
+                      //     width: double.infinity,
+                      //     height: 600,
+                      //     color: Colors.white,
+                      //     child: AdWidget(ad: myBanner),
+                      //   ),
+                      PostItem(
+                        profileImageUrl:
+                            'https://images.unsplash.com/photo-1664984359266-c548a621db31?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+                        userName: 'そらちゃんの日常🐱',
+                        imageUrls: [
+                          'https://images.unsplash.com/photo-1516750484197-6b28d10c91ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNTgwfDB8MXxzZWFyY2h8MjN8fENhdHN8ZW58MHx8fHwxNjczMTgyNTYz&ixlib=rb-4.0.3&q=80&w=400',
+                          'https://images.unsplash.com/photo-1516280030429-27679b3dc9cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNTgwfDB8MXxzZWFyY2h8NHx8Q2F0c3xlbnwwfHx8fDE2NzMxODI1NjM&ixlib=rb-4.0.3&q=80&w=400',
+                          'https://images.unsplash.com/photo-1532386236358-a33d8a9434e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNTgwfDB8MXxzZWFyY2h8MTh8fENhdHN8ZW58MHx8fHwxNjczMTgyNTYz&ixlib=rb-4.0.3&q=80&w=400',
+                          'https://images.unsplash.com/photo-1574231164645-d6f0e8553590?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1008&q=80'
+                        ],
+                        contents:
+                            '今年はまだ夜が寒くニャイ？\n◉パブリマ出版Award2022 新人賞受賞！◉\n私のフォトブック“ねこ街(ねこまち)”が頂きました！\nただいま年末年始セール開催中です！\nねこ街販売サイトは、プロフィールのリンクをご覧下さい！\n🌿愛猫アカウント @sabi_neko_0301 もよろしくニャ\n演出はしない主義です。',
+                      ),
+                    ],
+                  );
+                },
+                childCount: 100,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
-
-
-
-// RefreshIndicator(
-//             onRefresh: () async {
-//               await Future<void>.delayed(const Duration(seconds: 2));
-//             },
-//             child: ListView.builder(
-//               itemCount: 100,
-//               itemBuilder: (context, index) {
-//                 return const Padding(
-//                   padding: EdgeInsets.all(16),
-//                   child: PostItem(),
-//                 );
-//               },
-//             ),
-//           ),
