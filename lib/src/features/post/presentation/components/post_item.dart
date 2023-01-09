@@ -51,6 +51,77 @@ class PostItemState extends ConsumerState<PostItem>
     ).animate(_favoriteController);
   }
 
+  // URLを判別する処理
+  List<Widget> distinctUrlMessage(String message) {
+    final urlRegExp = RegExp(
+      r'((https?:www\.)|(https?:\/\/)|(www\.))[-a-zA-Z0-9@:%._\+~#=]{1,1024}\.[a-zA-Z0-9]{1,6}(\/[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)?',
+    );
+
+    final tagRegExp = RegExp(r'#.+ ');
+
+    final urlMatches = urlRegExp.allMatches(message);
+    final tagMatches = tagRegExp.allMatches(message);
+
+    final messages = <String>[];
+    final contents = <Widget>[];
+    var textEnd = '';
+    var count = 0;
+
+    // URLの数だけループ
+    for (final urlMatch in tagMatches) {
+      final url = message.substring(urlMatch.start, urlMatch.end);
+      print(url);
+      List<String> text;
+
+      if (count == 0) {
+        text = message.split(url);
+      } else {
+        text = textEnd.split(url);
+      }
+
+      count++;
+
+      if (text[0] != url) {
+        messages.add(text[0]);
+      }
+
+      messages.add(url);
+      textEnd = text.last;
+    }
+
+    if (textEnd != '') {
+      messages.add(textEnd);
+    }
+
+    // print(messages);
+
+    // タグの場合はリンクに変換
+    for (final list in messages) {
+      if (tagRegExp.hasMatch(list)) {
+        contents.add(
+          InkWell(
+            onTap: () {
+              print('リンクがタップされました');
+            },
+            child: Text(
+              list,
+              style: const TextStyle(color: Colors.blue),
+            ),
+          ),
+        );
+      } else {
+        contents.add(
+          Text(
+            list,
+            style: const TextStyle(color: Colors.black),
+          ),
+        );
+      }
+    }
+
+    return contents;
+  }
+
   Future<void> runFavoriteAnimation() async {
     await _favoriteController.forward();
     await Future<void>.delayed(const Duration(seconds: 1));
@@ -183,7 +254,12 @@ class PostItemState extends ConsumerState<PostItem>
               ),
             ],
           ),
-          Text(widget.contents)
+          Wrap(
+            children: [
+              for (final item in distinctUrlMessage(widget.contents)) item
+            ],
+          ),
+          // Text(widget.contents)
         ],
       ),
     );
