@@ -41,6 +41,7 @@ dependencies:
   google_mobile_ads: ^2.3.0
   smooth_page_indicator: ^1.0.0+2
   cached_network_image: ^3.2.3
+  url_launcher: ^6.1.7
 
 dev_dependencies:
   flutter_test:

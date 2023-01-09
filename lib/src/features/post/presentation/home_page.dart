@@ -103,7 +103,7 @@ class HomePage extends StatelessWidget {
                           'https://images.unsplash.com/photo-1574231164645-d6f0e8553590?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1008&q=80'
                         ],
                         contents:
-                            '初めまして！そらと申します！#駆け出し猫ちゃん よろしくおねがいします#駆け出しエンジニアと繋がりたい ',
+                            '初めまして！そらと申します！#駆け出し猫ちゃん dfdfdfdf#駆け出しエンジニアhttps://flutter.salon/dart/regexp/と繋がりたい ',
                       ),
                     ],
                   );

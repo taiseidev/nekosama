@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nekosama/gen/assets.gen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PostItem extends ConsumerStatefulWidget {
   const PostItem({
@@ -53,14 +54,16 @@ class PostItemState extends ConsumerState<PostItem>
 
   // URLを判別する処理
   List<Widget> distinctUrlMessage(String message) {
+    // url用の正規表現
     final urlRegExp = RegExp(
       r'((https?:www\.)|(https?:\/\/)|(www\.))[-a-zA-Z0-9@:%._\+~#=]{1,1024}\.[a-zA-Z0-9]{1,6}(\/[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)?',
     );
 
-    final tagRegExp = RegExp(r'#.+ ');
+    // タグ用の正規表現
+    // final tagRegExp = RegExp(r'#.*\s');
 
-    final urlMatches = urlRegExp.allMatches(message);
-    final tagMatches = tagRegExp.allMatches(message);
+    // final urlMatches = urlRegExp.allMatches(message);
+    final tagMatches = urlRegExp.allMatches(message);
 
     final messages = <String>[];
     final contents = <Widget>[];
@@ -70,7 +73,6 @@ class PostItemState extends ConsumerState<PostItem>
     // URLの数だけループ
     for (final urlMatch in tagMatches) {
       final url = message.substring(urlMatch.start, urlMatch.end);
-      print(url);
       List<String> text;
 
       if (count == 0) {
@@ -93,15 +95,23 @@ class PostItemState extends ConsumerState<PostItem>
       messages.add(textEnd);
     }
 
-    // print(messages);
-
-    // タグの場合はリンクに変換
+    // Widgetを作成
     for (final list in messages) {
-      if (tagRegExp.hasMatch(list)) {
+      if (urlRegExp.hasMatch(list)) {
         contents.add(
           InkWell(
-            onTap: () {
-              print('リンクがタップされました');
+            onTap: () async {
+              // タップしたらタグの画面に遷移する
+              print('アクセスしています');
+
+              if (await canLaunchUrl(Uri.parse(list))) {
+                await launchUrl(
+                  Uri.parse(list),
+                  mode: LaunchMode.inAppWebView,
+                );
+              } else {
+                throw 'このURLにはアクセスできません';
+              }
             },
             child: Text(
               list,
@@ -198,6 +208,28 @@ class PostItemState extends ConsumerState<PostItem>
                           },
                         ),
                       ),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(8),
+                      //   child: Align(
+                      //     alignment: Alignment.topRight,
+                      //     child: Opacity(
+                      //       opacity: 0.6,
+                      //       child: Container(
+                      //         decoration: BoxDecoration(
+                      //           color: Colors.grey,
+                      //           borderRadius: BorderRadius.circular(20),
+                      //         ),
+                      //         padding: const EdgeInsets.symmetric(
+                      //           vertical: 8,
+                      //           horizontal: 16,
+                      //         ),
+                      //         child: const Text(
+                      //           'そらちゃんfdfdfdfdfdfd',
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // )
                     ],
                   );
                 },
@@ -256,7 +288,7 @@ class PostItemState extends ConsumerState<PostItem>
           ),
           Wrap(
             children: [
-              for (final item in distinctUrlMessage(widget.contents)) item
+              for (final text in distinctUrlMessage(widget.contents)) text
             ],
           ),
           // Text(widget.contents)
