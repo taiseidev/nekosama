@@ -149,11 +149,18 @@ class PostItemState extends ConsumerState<PostItem>
             padding: const EdgeInsets.all(8),
             child: Row(
               children: [
-                CircleAvatar(
-                  radius: 15,
-                  child: CachedNetworkImage(
-                    imageUrl: widget.profileImageUrl,
-                    fit: BoxFit.cover,
+                CachedNetworkImage(
+                  imageUrl: widget.profileImageUrl,
+                  imageBuilder: (context, imageProvider) => Container(
+                    height: 25,
+                    width: 25,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(50)),
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 8),
