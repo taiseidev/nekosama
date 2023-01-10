@@ -280,7 +280,36 @@ class PostItemState extends ConsumerState<PostItem>
               ),
               const Spacer(flex: 2),
               IconButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await showModalBottomSheet<void>(
+                    context: context,
+                    isScrollControlled:
+                        true, //trueにしないと、Containerのheightが反映されない
+                    useRootNavigator: true,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(15)),
+                    ),
+                    builder: (BuildContext context) {
+                      return SizedBox(
+                        height: 500,
+                        child: Column(
+                          children: [
+                            const Gap(16),
+                            Container(
+                              width: 30,
+                              height: 3,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade400,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
                 icon: const Icon(Icons.more_horiz),
                 iconSize: 26,
               ),
