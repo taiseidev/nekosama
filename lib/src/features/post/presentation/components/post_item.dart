@@ -1,11 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nekosama/gen/assets.gen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class PostItem extends ConsumerStatefulWidget {
   const PostItem({
@@ -54,40 +55,36 @@ class PostItemState extends ConsumerState<PostItem>
 
   // URLを判別する処理
   List<Widget> distinctUrlMessage(String message) {
-    // url用の正規表現
-    final urlRegExp = RegExp(
-      r'((https?:www\.)|(https?:\/\/)|(www\.))[-a-zA-Z0-9@:%._\+~#=]{1,1024}\.[a-zA-Z0-9]{1,6}(\/[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)?',
-    );
-
     // タグ用の正規表現
-    // final tagRegExp = RegExp(r'#.*\s');
+    final tagRegExp = RegExp(r'#([^\s]+)\s');
 
-    // final urlMatches = urlRegExp.allMatches(message);
-    final tagMatches = urlRegExp.allMatches(message);
+    final tagMatches = tagRegExp.allMatches(message);
 
     final messages = <String>[];
     final contents = <Widget>[];
     var textEnd = '';
     var count = 0;
+    print(tagMatches.length);
 
     // URLの数だけループ
-    for (final urlMatch in tagMatches) {
-      final url = message.substring(urlMatch.start, urlMatch.end);
+    for (final tagMatch in tagMatches) {
+      final tag = message.substring(tagMatch.start, tagMatch.end);
+
       List<String> text;
 
       if (count == 0) {
-        text = message.split(url);
+        text = message.split(tag);
       } else {
-        text = textEnd.split(url);
+        text = textEnd.split(tag);
       }
 
       count++;
 
-      if (text[0] != url) {
+      if (text[0] != tag) {
         messages.add(text[0]);
       }
 
-      messages.add(url);
+      messages.add(tag);
       textEnd = text.last;
     }
 
@@ -97,33 +94,28 @@ class PostItemState extends ConsumerState<PostItem>
 
     // Widgetを作成
     for (final list in messages) {
-      if (urlRegExp.hasMatch(list)) {
+      print(list);
+      if (tagRegExp.hasMatch(list)) {
         contents.add(
-          InkWell(
-            onTap: () async {
-              // タップしたらタグの画面に遷移する
-              print('アクセスしています');
-
-              if (await canLaunchUrl(Uri.parse(list))) {
-                await launchUrl(
-                  Uri.parse(list),
-                  mode: LaunchMode.inAppWebView,
-                );
-              } else {
-                throw 'このURLにはアクセスできません';
-              }
-            },
-            child: Text(
-              list,
+          RichText(
+            text: TextSpan(
               style: const TextStyle(color: Colors.blue),
+              children: [
+                TextSpan(
+                  text: list,
+                  recognizer: TapGestureRecognizer()..onTap = () async {},
+                ),
+              ],
             ),
           ),
         );
       } else {
         contents.add(
-          Text(
-            list,
-            style: const TextStyle(color: Colors.black),
+          Flexible(
+            child: Text(
+              list,
+              style: const TextStyle(color: Colors.black),
+            ),
           ),
         );
       }

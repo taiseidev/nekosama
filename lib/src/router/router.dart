@@ -78,7 +78,7 @@ final routerProvider = Provider<GoRouter>(
             path: '/search',
             pageBuilder: (context, state) => NoTransitionPage<void>(
               key: state.pageKey,
-              child: const SearchPage(),
+              child: SearchPage(),
             ),
           ),
           GoRoute(
