@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -53,9 +52,8 @@ class PostItemState extends ConsumerState<PostItem>
     ).animate(_favoriteController);
   }
 
-  // URLを判別する処理
+  // タグに変更する処理
   List<Widget> distinctUrlMessage(String message) {
-    // タグ用の正規表現
     final tagRegExp = RegExp(r'#([^\s]+)\s');
 
     final tagMatches = tagRegExp.allMatches(message);
@@ -64,9 +62,8 @@ class PostItemState extends ConsumerState<PostItem>
     final contents = <Widget>[];
     var textEnd = '';
     var count = 0;
-    print(tagMatches.length);
 
-    // URLの数だけループ
+    // タグの数だけループ
     for (final tagMatch in tagMatches) {
       final tag = message.substring(tagMatch.start, tagMatch.end);
 
@@ -92,20 +89,23 @@ class PostItemState extends ConsumerState<PostItem>
       messages.add(textEnd);
     }
 
-    // Widgetを作成
     for (final list in messages) {
-      print(list);
       if (tagRegExp.hasMatch(list)) {
         contents.add(
-          RichText(
-            text: TextSpan(
-              style: const TextStyle(color: Colors.blue),
-              children: [
-                TextSpan(
-                  text: list,
-                  recognizer: TapGestureRecognizer()..onTap = () async {},
+          InkWell(
+            onTap: () async {
+              await Navigator.push<void>(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return TagPage(tag: list);
+                  },
                 ),
-              ],
+              );
+            },
+            child: Text(
+              list,
+              style: const TextStyle(color: Colors.blue),
             ),
           ),
         );
@@ -329,5 +329,26 @@ class PostItemState extends ConsumerState<PostItem>
   void dispose() {
     super.dispose();
     _favoriteController.dispose();
+  }
+}
+
+class TagPage extends StatelessWidget {
+  const TagPage({
+    super.key,
+    required this.tag,
+  });
+
+  final String tag;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(tag),
+      ),
+      body: Center(
+        child: Text('$tag画面に遷移しました'),
+      ),
+    );
   }
 }
