@@ -6,21 +6,25 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nekosama/app.dart';
 import 'package:nekosama/firebase_options/firebase_options_dev.dart' as dev;
 import 'package:nekosama/firebase_options/firebase_options_prod.dart' as prod;
+import 'package:nekosama/src/utils/logger.dart';
 import 'package:nekosama/src/utils/provider_logger.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await MobileAds.instance.initialize();
+
   const flavor = String.fromEnvironment('FLAVOR');
-  debugPrint('環境：$flavor');
+  logger.i('環境：$flavor');
 
-  // Firebaseの読み込み
-  await setFirebase(flavor: flavor);
-
-  // 画面の向きを固定する。
-  await SystemChrome.setPreferredOrientations(
-    [DeviceOrientation.portraitUp],
-  );
+  await Future.wait([
+    // 広告を初期化
+    MobileAds.instance.initialize(),
+    // Firebaseの読み込み
+    setFirebase(flavor: flavor),
+    // 画面の向きを固定
+    SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp],
+    ),
+  ]);
 
   runApp(
     ProviderScope(
