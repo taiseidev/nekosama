@@ -6,6 +6,7 @@ import 'package:nekosama/src/common_widgets/top_page.dart';
 import 'package:nekosama/src/features/authentication/presentation/sign_in/auth_code_input_page.dart';
 import 'package:nekosama/src/features/authentication/presentation/sign_in/name_email_input_page.dart';
 import 'package:nekosama/src/features/authentication/presentation/sign_in/phone_number_input_page.dart';
+import 'package:nekosama/src/features/post/presentation/components/post_item.dart';
 import 'package:nekosama/src/features/post/presentation/home_page.dart';
 import 'package:nekosama/src/router/not_found_page.dart';
 
@@ -21,7 +22,7 @@ final navigatorKeyProvider = Provider(
 
 final routerProvider = Provider<GoRouter>(
   (ref) => GoRouter(
-    initialLocation: '/home',
+    initialLocation: '/',
     debugLogDiagnostics: true,
     navigatorKey: ref.watch(navigatorKeyProvider),
     routes: [
@@ -72,13 +73,22 @@ final routerProvider = Provider<GoRouter>(
                   return const DetailPage();
                 },
               ),
+              GoRoute(
+                path: 'tag:tag',
+                builder: (BuildContext context, GoRouterState state) {
+                  final tag = state.params['tag'];
+                  return TagPage(
+                    tag: tag as String,
+                  );
+                },
+              ),
             ],
           ),
           GoRoute(
             path: '/search',
             pageBuilder: (context, state) => NoTransitionPage<void>(
               key: state.pageKey,
-              child: SearchPage(),
+              child: const SearchPage(),
             ),
           ),
           GoRoute(

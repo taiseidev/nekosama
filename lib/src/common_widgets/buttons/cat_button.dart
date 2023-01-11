@@ -92,15 +92,11 @@ class CatButtonPainter extends CustomPainter {
           fontSize: 16,
           fontWeight: FontWeight.w800,
         ),
-        children: <TextSpan>[
-          TextSpan(text: catButtonText),
-        ],
+        children: <TextSpan>[TextSpan(text: catButtonText)],
       ),
       textDirection: TextDirection.ltr,
     )
-      ..layout(
-        maxWidth: size.width,
-      )
+      ..layout(maxWidth: size.width)
       ..paint(canvas, Offset(size.width / 3, size.height / 2));
   }
 

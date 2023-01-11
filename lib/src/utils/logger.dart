@@ -1,6 +1,6 @@
 import 'package:roggle/roggle.dart';
 
-const _loggerName = '[APP]';
+const _loggerName = '[Roggle]';
 
 /// ログレベル毎の使い分けは次の通り
 /// verbose: 垂れ流し系、大量に出力される場合

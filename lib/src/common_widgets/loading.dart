@@ -6,13 +6,15 @@ import 'package:nekosama/gen/assets.gen.dart';
 class PrimaryLoading extends StatelessWidget {
   const PrimaryLoading({super.key});
 
+  static const loadingSize = 150.0;
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Lottie.asset(
         Assets.loading.primaryLoading,
-        width: 150,
-        height: 150,
+        width: loadingSize,
+        height: loadingSize,
       ),
     );
   }
