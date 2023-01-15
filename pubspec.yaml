@@ -48,9 +48,9 @@ dev_dependencies:
     sdk: flutter
   pedantic_mono:
   device_preview:
-  go_router_builder:
   freezed: ^2.3.2
   json_serializable: ^6.5.4
+  go_router_builder: ^1.0.0
 
 
 flutter:
