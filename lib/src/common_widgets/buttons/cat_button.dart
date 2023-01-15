@@ -25,7 +25,7 @@ class CatButton extends HookWidget {
                 },
                 onTapUp: (value) {
                   isPressed.value = false;
-                  context.push('/signIn');
+                  context.push('/phoneNumberInput');
                 },
                 onTapCancel: () {
                   isPressed.value = false;

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nekosama/src/common_widgets/top_page.dart';
+import 'package:nekosama/src/features/authentication/presentation/sign_in/auth_code_input_page.dart';
+import 'package:nekosama/src/features/authentication/presentation/sign_in/phone_number_input_page.dart';
 import 'package:nekosama/src/router/not_found_page.dart';
 
 part 'router.g.dart';
@@ -26,6 +28,26 @@ class TopRoute extends GoRouteData {
   Widget build(BuildContext context) => const TopPage();
 }
 
+@TypedGoRoute<PhoneNumberInputRoute>(
+  path: '/phoneNumberInput',
+)
+class PhoneNumberInputRoute extends GoRouteData {
+  const PhoneNumberInputRoute();
+
+  @override
+  Widget build(BuildContext context) => const PhoneNumberInputPage();
+}
+
+@TypedGoRoute<AuthCodeInputRoute>(
+  path: '/authCodeInput',
+)
+class AuthCodeInputRoute extends GoRouteData {
+  const AuthCodeInputRoute();
+
+  @override
+  Widget build(BuildContext context) => const AuthCodeInputPage();
+}
+
 final routerProvider = Provider<GoRouter>(
   (ref) => GoRouter(
     initialLocation: '/',
@@ -33,27 +55,6 @@ final routerProvider = Provider<GoRouter>(
     navigatorKey: ref.watch(navigatorKeyProvider),
     routes: $appRoutes,
     // routes: [
-    //   GoRoute(
-    //     name: 'top',
-    //     path: '/',
-    //     builder: (BuildContext context, GoRouterState state) {
-    //       return const TopPage();
-    //     },
-    //   ),
-    //   GoRoute(
-    //     name: 'signIn',
-    //     path: '/signIn',
-    //     builder: (BuildContext context, GoRouterState state) {
-    //       return const PhoneNumberInputPage();
-    //     },
-    //   ),
-    //   GoRoute(
-    //     name: 'authCodeInput',
-    //     path: '/authCodeInput',
-    //     builder: (BuildContext context, GoRouterState state) {
-    //       return const AuthCodeInputPage();
-    //     },
-    //   ),
     //   GoRoute(
     //     name: 'nameEmailInput',
     //     path: '/nameEmailInput',
